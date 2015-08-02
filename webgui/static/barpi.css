@@ -1,0 +1,4 @@
+/*  verticatl align row in table */
+.table > tbody > tr > th {
+     vertical-align: middle;
+}

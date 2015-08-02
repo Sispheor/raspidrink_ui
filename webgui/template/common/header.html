@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <!-- Head -->
+    <head>
+        {% if pagetitle %}
+            <title>{{ pagetitle }}</title>
+        {% else %}
+            <title>BarPi</title>
+        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- Bootstrap -->
+        <link href="{{ STATIC_URL }}dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- jQuery  -->
+        <script src="{{ STATIC_URL }}jquery.js"></script>
+        <!-- Boostrap -->
+        <script src="{{ STATIC_URL }}dist/js/bootstrap.min.js"></script>
+        <!-- Personnal CSS -->
+        <link href="{{ STATIC_URL }}barpi.css" rel="stylesheet">
+
+
+    </head>
+<body>
+    <div id ="page">

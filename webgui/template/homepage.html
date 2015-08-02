@@ -1,0 +1,86 @@
+<!-- Header -->
+{% include 'common/header.html' %}
+
+<!-- navbar -->
+{% include 'common/navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="jumbotron" style="height: 400px;">
+                <h1>Random</h1>
+
+                <p>Prend au hazard un des cocktails existants</p>
+
+                <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button"><span class="glyphicon glyphicon-random"></span> Inch Allah</a></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="jumbotron" style="height: 400px;">
+                <h1>Cerceuille</h1>
+
+                <p>Prend au hazard les ingrédients et la quantité de chacuns pour un verre unique.</p>
+
+                <p><a class="btn btn-danger btn-lg btn-block" href="#" role="button"><span class="glyphicon glyphicon-alert"></span> Un cerceuille! Un!</a></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="jumbotron" style="height: 400px;">
+                <h1>Création</h1>
+
+                <p>Créez vôtre propre cocktail à partir des ingrédients disponibles</p>
+
+                <p><a class="btn btn-success btn-lg btn-block" href="#" role="button"><span class="glyphicon glyphicon-pencil"></span> Mode création</a></p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Table with actual brand -->
+    <fieldset style="margin-top: 20px" class="scheduler-border">
+        <legend class="scheduler-border"> Liste des cocktails</legend>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Contenu</th>
+                <th>Lancer</th>
+                <th>Editer</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            {% for cocktail in coktails %}
+            <tr>
+                <th>
+                    {{cocktail.name}}
+                </th>
+                <th>
+                    {% for bottle in cocktail.bottles.all %}
+                    {{bottle.name}},
+                    {% endfor %}
+                </th>
+                <th>
+                    <a href="#" type="button" class="btn btn-success btn-lg">
+                        <span class="glyphicon glyphicon-glass"></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="#" type="button" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="#" type="button" class="btn btn-danger btn-lg">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </th>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </fieldset>
+</div>
+
+<!-- footer -->
+{% include 'common/footer.html' %}
