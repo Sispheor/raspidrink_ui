@@ -18,9 +18,12 @@ info_bottle2.save()
 info_bottle3 = Cocktailinfo(bottle=bottle3, cocktail=pina, volume=4)
 info_bottle3.save()
 
+
+bottles = Bottle.objects.all()
+for bottle in bottles:
+    print bottle
 """
 all_cocktail = Cocktail.objects.all()
-
 for cocktail in all_cocktail:
     print "Cocktail: " + str(cocktail)
     for bottle in cocktail.bottles.all():

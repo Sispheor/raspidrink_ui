@@ -8,4 +8,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'webgui.views.homepage'),
+    url(r'^create_cocktail/$', 'webgui.views.create_cocktail'),
+
 )

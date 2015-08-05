@@ -2,3 +2,7 @@
 .table > tbody > tr > th {
      vertical-align: middle;
 }
+
+ul#id_bottle {
+  list-style-type: none;
+}
