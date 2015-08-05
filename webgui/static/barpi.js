@@ -1,3 +1,8 @@
+// hide messages after a delay
+setTimeout(function() {
+    $('#messages').fadeOut('fast');
+}, 3000); // <-- time in milliseconds
+
 $(document).ready(function () {
     // Code adapted from http://djangosnippets.org/snippets/1389/
     function updateElementIndex(el, prefix, ndx) {

@@ -1,10 +1,10 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from models import Bottle, Cocktail, Cocktailinfo
 from webgui.form import *
 from django.forms.formsets import formset_factory, BaseFormSet
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
+from django.contrib import messages
 
 def homepage(request):
     """
@@ -12,7 +12,6 @@ def homepage(request):
     :param request: metadata about the request
     :return: Homepage
     """
-
     cocktails = Cocktail.objects.all()
     return render(request, 'homepage.html', {'coktails': cocktails})
 
@@ -34,12 +33,19 @@ def create_cocktail(request):
         cocktail_item_formset = BottleItemFormSet(request.POST, request.FILES)
 
         if bottle_list_form.is_valid() and cocktail_item_formset.is_valid():
-            todo_list = bottle_list_form.save()
+            # create the cocktail
+            cocktail = Cocktail()
+            cocktail.lock = False
+            cocktail.name = bottle_list_form.cleaned_data['name']
+            cocktail.save()
+
             for form in cocktail_item_formset.forms:
-                todo_item = form.save(commit=False)
-                todo_item.list = todo_list
-                todo_item.save()
-            return HttpResponseRedirect('thanks')  # Redirect to a 'success' page
+                volume = form.cleaned_data['volume']
+                bottle = Bottle.objects.get(id=form.cleaned_data['bottle'].id)
+                info_cocktail = Cocktailinfo(bottle=bottle, cocktail=cocktail, volume=volume)
+                info_cocktail.save()
+            messages.add_message(request, messages.SUCCESS, "Cocktail créé avec succès")
+            return redirect('webgui.views.homepage')
     else:
         bottle_list_form = CoktailForm()
         cocktail_item_formset = BottleItemFormSet()
