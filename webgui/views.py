@@ -57,3 +57,8 @@ def create_cocktail(request):
     return render(request, 'create_cocktail.html', c)
 
 
+def delete_cocktail(request, id):
+    cocktail = Cocktail.objects.get(id=id)
+    cocktail.delete()
+    messages.add_message(request, messages.SUCCESS, "Cocktail supprimé")
+    return redirect('webgui.views.homepage')

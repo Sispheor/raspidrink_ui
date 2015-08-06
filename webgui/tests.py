@@ -22,7 +22,7 @@ info_bottle3.save()
 bottles = Bottle.objects.all()
 for bottle in bottles:
     print bottle
-"""
+
 all_cocktail = Cocktail.objects.all()
 for cocktail in all_cocktail:
     print "Cocktail: " + str(cocktail)
@@ -30,3 +30,14 @@ for cocktail in all_cocktail:
         print bottle
         info = Cocktailinfo.objects.get(bottle=bottle, cocktail=cocktail)
         print info.volume
+
+coktailinfos = Cocktailinfo.objects.all()
+
+for coktailinfo in coktailinfos:
+    print coktailinfo
+
+
+"""
+all_cocktail = Cocktail.objects.all()
+for cocktail in all_cocktail:
+    cocktail.delete()
