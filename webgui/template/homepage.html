@@ -5,50 +5,40 @@
 {% include 'common/navbar.html' %}
 
 <!-- Message -->
-{% if messages %}
-    {% for message in messages %}
-        <div id="messages" class="alert alert-{{ message.tags }} alert-dismissible alert-box" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+{% include 'common/messages.html' %}
+
 
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="jumbotron" style="height: 400px;">
-                <h1>Random</h1>
-
-                <p>Prend au hazard un des cocktails existants</p>
-
-                <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button"><span class="glyphicon glyphicon-random"></span> Inch Allah</a></p>
+            <div class="tile">
+                <h3 class="tile-title">Random</h3>
+                <p>Prend au hazard un des cocktails de la liste existante.</p>
+                <a class="btn btn-primary btn-large btn-block" href="http://designmodo.com/flat">Inch Allah</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="jumbotron" style="height: 400px;">
-                <h1>Cerceuille</h1>
 
+        <div class="col-md-4">
+            <div class="tile">
+                <h3 class="tile-title">Cerceuille</h3>
                 <p>Prend au hazard les ingrédients et la quantité de chacuns pour un verre unique.</p>
-
-                <p><a class="btn btn-danger btn-lg btn-block" href="#" role="button"><span class="glyphicon glyphicon-alert"></span> Un cerceuille! Un!</a></p>
+                <a class="btn btn-danger btn-large btn-block" href="http://designmodo.com/flat">Adieu</a>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="jumbotron" style="height: 400px;">
-                <h1>Création</h1>
-
-                <p>Créez vôtre propre cocktail à partir des ingrédients disponibles</p>
-
-                <p><a class="btn btn-success btn-lg btn-block" href="{% url 'webgui.views.create_cocktail' %}" role="button"><span class="glyphicon glyphicon-pencil"></span> Mode création</a></p>
+            <div class="tile">
+                <h3 class="tile-title">Création</h3>
+                <p>Créez vôtre propre cocktail à partir des ingrédients disponibles.</p>
+                <a class="btn btn-info btn-large btn-block" href="{% url 'webgui.views.create_cocktail' %}">I'm a barman</a>
             </div>
         </div>
+
+
     </div>
 
-
-    <!-- Table with actual brand -->
-    <fieldset style="margin-top: 20px" class="scheduler-border">
-        <legend class="scheduler-border"> Liste des cocktails</legend>
+    <div class="jumbotron">
+        <!-- Table with actual brand -->
+        <h3 class="tile-title">Liste des cocktails</h3>
 
         <table class="table table-striped">
             <thead>
@@ -81,7 +71,8 @@
                     </a>
                 </th>
                 <th>
-                    <a href="{% url 'webgui.views.delete_cocktail' cocktail.id %}" type="button" class="btn btn-danger btn-lg">
+                    <a href="{% url 'webgui.views.delete_cocktail' cocktail.id %}" type="button"
+                       class="btn btn-danger btn-lg">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                 </th>
@@ -89,7 +80,8 @@
             {% endfor %}
 
         </table>
-    </fieldset>
+
+    </div>
 </div>
 
 <!-- footer -->

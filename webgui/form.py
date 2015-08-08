@@ -19,7 +19,37 @@ class BottleItemForm(forms.Form):
     bottle = forms.ModelChoiceField(label="Bouteille",
                                     queryset=Bottle.objects.all(),
                                     required=True,
-                                    widget=forms.Select(attrs={'class': 'form-control input-sm'}))
+                                    widget=forms.Select(attrs={'class': 'form-control'}))
 
     volume = forms.IntegerField(label="Volume en cl",
                                 widget=forms.TextInput(attrs={'class': 'form-control input-sm'}))
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label="Login",
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control login-field',
+                                                             'placeholder': 'Login'}))
+
+    password = forms.CharField(label="Mot de passe",
+                               required=True,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control login-field',
+                                                                 'placeholder': 'Password'}))
+
+
+class BottleForm(ModelForm):
+    name = forms.CharField(label="Nom",
+                           required=True,
+                           widget=forms.TextInput(attrs={'class': 'form-control',
+                                                             'placeholder': 'Exemple: Vodka'}))
+    slot = forms.IntegerField(label="Slot",
+                              widget=forms.NumberInput(attrs={'class': 'form-control input-sm'}))
+
+    class Meta:
+        model = Bottle
+
+
+
+
+
+

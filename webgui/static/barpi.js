@@ -62,6 +62,7 @@ $(document).ready(function () {
             });
             // Update the total form count
             $("#id_" + prefix + "-TOTAL_FORMS").val(formCount + 1);
+
         } // End if
         else {
             alert("Sorry, you can only enter a maximum of ten items.");

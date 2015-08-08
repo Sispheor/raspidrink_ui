@@ -1,0 +1,18 @@
+<!-- Header -->
+{% include 'common/header.html' %}
+
+<!-- navbar -->
+{% include 'common/navbar.html' %}
+
+<div class="container">
+    <form class="form-horizontal login-form" action="{% url 'webgui.views.create_bottle' %}" method="POST">{% csrf_token %}
+
+            {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">
+          <i class="glyphicon glyphicon-ok"></i> Ajouter la bouteille
+        </button>
+    </form>
+</div>
+<!-- footer -->
+{% include 'common/footer.html' %}

@@ -1,0 +1,27 @@
+<!-- Header -->
+{% include 'common/header.html' %}
+
+<!-- navbar -->
+{% include 'common/navbar.html' %}
+
+<div class="container">
+            <form class="form-horizontal login-form" action="{% url 'webgui.views.delete_bottle' bottle.id %}" method="post">{% csrf_token %}
+                {% if cocktails  %}
+                    <div class="alert alert-danger" role="alert"><strong>Attention! </strong>La suppresion de cette bouteille entrainera la supression des cocktails ci dessous</div>
+                    {% for cocktail in cocktails %}
+                        <li>{{ cocktail.name }}</li>
+                    {% endfor %}
+                {% endif %}
+                <br>
+                <h3 class="tile-title">Confirmer la suppression</h3>
+                <!-- validate button -->
+                <div style="padding-top:20px">
+                    <a class="btn btn-default" href="{% url 'webgui.views.admin_homepage'%}">Annuler</a>
+                    <input class="btn btn-primary" type="submit" value="Supprimer la bouteille" />
+                </div>
+            </form>
+
+
+</div>
+<!-- footer -->
+{% include 'common/footer.html' %}

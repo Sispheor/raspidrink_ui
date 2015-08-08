@@ -1,0 +1,79 @@
+<!-- Header -->
+{% include 'common/header.html' %}
+
+<!-- navbar -->
+{% include 'common/navbar.html' %}
+
+<div class="container">
+    <div class="page-header">
+        <h1>Création d'un cocktail</h1>
+    </div>
+
+
+    <form class="form-horizontal" action="{% url 'webgui.views.create_cocktail' %}" method="POST">{% csrf_token %}
+        <div class="section">
+             {% for field in bottle_list_form %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label for="{{field.name}}" class="col-sm-2 control-label">
+                        {{ field.label }}
+                    </label>
+                    <div class="col-sm-4">
+                        {{ field }}
+                    </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <h3>Liste des bouteilles</h3>
+        {{ cocktail_item_formset.management_form }}
+        {% for form in cocktail_item_formset.forms %}
+        <div class="item">
+            {% for field in form %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                <label for="{{field.name}}" class="col-sm-2 control-label">
+                    {{ field.label }}
+                </label>
+                <div class="col-sm-4">
+                    {{ field }}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <div class="col-sm-2 control-label">
+
+                </div>
+                <div class="col-sm-4">
+                    <a href="#" type="button" class="delete btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+
+            </div>
+            <div class="col-sm-4">
+                <a href="#" type="button" id="add" class="delete btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+        </div>
+        <!-- validate button -->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-success" type="submit">
+                        <span class="glyphicon glyphicon-ok"></span>
+                        Créer le cocktail
+                    </button>
+                </div>
+            </div>
+
+
+    </form>
+
+
+</div>
+<!-- footer -->
+{% include 'common/footer.html' %}

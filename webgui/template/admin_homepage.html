@@ -1,0 +1,51 @@
+<!-- Header -->
+{% include 'common/header.html' %}
+
+<!-- navbar-admin -->
+{% include 'common/navbar-admin.html' %}
+
+<!-- Message -->
+{% include 'common/messages.html' %}
+
+<div class="container">
+    <div class="jumbotron">
+        <!-- create bottle button -->
+        <a class="btn btn-info" href="{% url 'webgui.views.create_bottle'%}"><span class="fui-plus"></span> Ajouter une bouteille</a>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Slot</th>
+                <th>Editer</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            {% for bottle in bottles %}
+            <tr>
+                <th>
+                    {{bottle.name}}
+                </th>
+                <th>
+                    {{bottle.slot}}
+                </th>
+                <th>
+                    <a href="{% url 'webgui.views.update_bottle' bottle.id %}" type="button" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="{% url 'webgui.views.delete_bottle' bottle.id %}" type="button"
+                       class="btn btn-danger btn-lg">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+</div>
+<!-- footer -->
+{% include 'common/footer.html' %}

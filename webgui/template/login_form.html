@@ -1,0 +1,39 @@
+<!-- Header -->
+{% include 'common/header.html' %}
+
+<!-- navbar -->
+{% include 'common/navbar.html' %}
+
+<!-- Message -->
+{% if messages %}
+    {% for message in messages %}
+
+    <div id="messages" class="alert alert-{{ message.tags }} alert-dismissible alert-box" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="container">
+    <form action="{% url 'webgui.views.login_page' %}" method="POST">{% csrf_token %}
+        <div class="login-screen">
+            <div class="login-form">
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field }}
+                    {% if field.name == "username" %}
+                        <label class="login-field-icon fui-user" for="{{ field.auto_id }}"></label>
+                    {% else %}
+                        <label class="login-field-icon fui-lock" for="{{ field.auto_id }}"></label>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- footer -->
+{% include 'common/footer.html' %}

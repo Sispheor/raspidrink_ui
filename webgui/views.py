@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from models import Bottle, Cocktail, Cocktailinfo
 from webgui.form import *
 from django.forms.formsets import formset_factory, BaseFormSet
 from django.core.context_processors import csrf
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 
 def homepage(request):
     """
@@ -62,3 +65,76 @@ def delete_cocktail(request, id):
     cocktail.delete()
     messages.add_message(request, messages.SUCCESS, "Cocktail supprimé")
     return redirect('webgui.views.homepage')
+
+
+def login_page(request):
+    if request.POST:
+        form = LoginForm(request.POST)  # A form bound to the POST data
+        if form.is_valid():  # All validation rules pass
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password, request=request)
+            print "authenticate user :"+str(user)
+            if user is not None:
+                login(request, user)
+                return redirect('webgui.views.admin_homepage')
+            else:
+                messages.add_message(request, messages.ERROR, "Login ou mot de passe invalide", extra_tags='danger')
+                form = LoginForm()  # An unbound form
+                return render(request, 'login_form.html', {'form': form})
+        else:
+            messages.add_message(request, messages.ERROR, "Login ou mot de passe invalide", extra_tags='danger')
+            return render(request, 'login_form.html', {'form': form})
+
+    else:
+        form = LoginForm()  # An unbound form
+        return render(request, 'login_form.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('webgui.views.homepage')
+
+
+@login_required(login_url='/login/')
+def admin_homepage(request):
+    bottles = Bottle.objects.all().order_by('slot')
+    return render(request, 'admin_homepage.html', {'bottles': bottles})
+
+@login_required(login_url='/login/')
+def delete_bottle(request, id):
+    bottle = Bottle.objects.get(id=id)
+    cocktails = Cocktail.objects.filter(bottles=id)
+    if request.POST:
+        # remove cocktail
+        for cocktail in cocktails:
+            cocktail.delete()
+        # remove bottle
+        bottle = Bottle.objects.get(id=id)
+        bottle.delete()
+        messages.add_message(request, messages.SUCCESS, "Bouteille supprimée")
+        return redirect('webgui.views.admin_homepage')
+    else:
+        return render(request, 'delete_bottle.html', {'bottle': bottle, 'cocktails': cocktails})
+
+
+@login_required(login_url='/login/')
+def create_bottle(request):
+    if request.POST:
+        form = BottleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('webgui.views.admin_homepage')
+    else:
+        form = BottleForm()
+    return render(request, 'create_bottle.html', {'form': form})
+
+
+@login_required(login_url='/login/')
+def update_bottle(request, id):
+    bottle = get_object_or_404(Bottle, id=id)
+    form = BottleForm(request.POST or None, instance=bottle)
+    if form.is_valid():
+        form.save()
+        return redirect('webgui.views.admin_homepage')
+    return render(request, "update_bottle.html", {'form': form,
+                                                  'bottle': bottle})
