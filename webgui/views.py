@@ -100,6 +100,7 @@ def admin_homepage(request):
     bottles = Bottle.objects.all().order_by('slot')
     return render(request, 'admin_homepage.html', {'bottles': bottles})
 
+
 @login_required(login_url='/login/')
 def delete_bottle(request, id):
     bottle = Bottle.objects.get(id=id)
@@ -138,3 +139,7 @@ def update_bottle(request, id):
         return redirect('webgui.views.admin_homepage')
     return render(request, "update_bottle.html", {'form': form,
                                                   'bottle': bottle})
+
+
+
+

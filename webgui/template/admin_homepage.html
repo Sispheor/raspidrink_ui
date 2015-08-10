@@ -2,15 +2,35 @@
 {% include 'common/header.html' %}
 
 <!-- navbar-admin -->
-{% include 'common/navbar-admin.html' %}
-
+{% with "admin" as current_page  %}
+    {% include 'common/navbar.html' %}
+{% endwith %}
 <!-- Message -->
 {% include 'common/messages.html' %}
 
 <div class="container">
     <div class="jumbotron">
-        <!-- create bottle button -->
-        <a class="btn btn-info" href="{% url 'webgui.views.create_bottle'%}"><span class="fui-plus"></span> Ajouter une bouteille</a>
+        <div class="row">
+            <div class="col-md-8">
+                <div style="width:700px; margin:20px 10px" class="togglebutton togglebutton-material-pink">
+                    <label>
+                        Arret / Marche de l'ensemble des pompes
+                        <input style="float: right;" type="checkbox" checked="">
+                    </label>
+                </div>
+                <div  style="width:700px; margin:20px 10px" class="togglebutton togglebutton-material-deep-orange">
+                    <label>
+                        Inverser le sens du flux
+                        <input style="float: right;" type="checkbox">
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- create bottle button -->
+                <a class="btn btn-primary btn-fab btn-raised mdi-content-add right-corner-btn"
+                   href="{% url 'webgui.views.create_bottle'%}"></a>
+            </div>
+        </div>
 
         <table class="table table-striped">
             <thead>
@@ -19,6 +39,7 @@
                 <th>Slot</th>
                 <th>Editer</th>
                 <th>Supprimer</th>
+                <th>Off / On</th>
             </tr>
             </thead>
             {% for bottle in bottles %}
@@ -30,7 +51,8 @@
                     {{bottle.slot}}
                 </th>
                 <th>
-                    <a href="{% url 'webgui.views.update_bottle' bottle.id %}" type="button" class="btn btn-primary btn-lg">
+                    <a href="{% url 'webgui.views.update_bottle' bottle.id %}" type="button"
+                       class="btn btn-primary btn-lg">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                 </th>
@@ -40,6 +62,13 @@
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                 </th>
+                <th>
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox">
+                        </label>
+                    </div>
+                </th>
             </tr>
             {% endfor %}
         </table>
@@ -47,5 +76,20 @@
 
 
 </div>
+<style>
+                #toggle-button h2 {
+                  font-size: 18.7199993133545px;
+                  font-weight: bold;
+                  margin-bottom: 30px;
+                  margin-top: 50px;
+                }
+                #toggle-button .togglebutton label {
+                  margin: 20px 10px;
+                  width: 200px;
+                }
+                #toggle-button .togglebutton .toggle {
+                  float: right;
+                }
+              </style>
 <!-- footer -->
 {% include 'common/footer.html' %}

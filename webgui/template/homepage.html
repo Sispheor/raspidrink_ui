@@ -2,7 +2,9 @@
 {% include 'common/header.html' %}
 
 <!-- navbar -->
-{% include 'common/navbar.html' %}
+{% with "home" as current_page %}
+    {% include 'common/navbar.html' %}
+{% endwith %}
 
 <!-- Message -->
 {% include 'common/messages.html' %}
@@ -10,36 +12,34 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <div class="tile">
-                <h3 class="tile-title">Random</h3>
+        <div class="col-md-6">
+            <div class="well">
+                <h3>Random</h3>
                 <p>Prend au hazard un des cocktails de la liste existante.</p>
                 <a class="btn btn-primary btn-large btn-block" href="http://designmodo.com/flat">Inch Allah</a>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="tile">
-                <h3 class="tile-title">Cerceuille</h3>
+        <div class="col-md-6">
+            <div class="well">
+                <h3>Cerceuille</h3>
                 <p>Prend au hazard les ingrédients et la quantité de chacuns pour un verre unique.</p>
                 <a class="btn btn-danger btn-large btn-block" href="http://designmodo.com/flat">Adieu</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="tile">
-                <h3 class="tile-title">Création</h3>
-                <p>Créez vôtre propre cocktail à partir des ingrédients disponibles.</p>
-                <a class="btn btn-info btn-large btn-block" href="{% url 'webgui.views.create_cocktail' %}">I'm a barman</a>
+    </div>
+    {% if coktails %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="tile-title">Liste des cocktails</h3>
+            </div>
+            <div class="col-md-4">
+                <!-- create cocktail button -->
+                <a class="btn btn-primary btn-fab btn-raised mdi-content-add right-corner-btn"
+                   href="{% url 'webgui.views.create_cocktail' %}"></a>
             </div>
         </div>
-
-
-    </div>
-
-    <div class="jumbotron">
-        <!-- Table with actual brand -->
-        <h3 class="tile-title">Liste des cocktails</h3>
-
         <table class="table table-striped">
             <thead>
             <tr>
@@ -82,6 +82,7 @@
         </table>
 
     </div>
+    {% endif %}
 </div>
 
 <!-- footer -->

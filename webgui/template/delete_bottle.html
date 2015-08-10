@@ -1,16 +1,20 @@
 <!-- Header -->
 {% include 'common/header.html' %}
 
-<!-- navbar -->
-{% include 'common/navbar.html' %}
+<!-- navbar-admin -->
+{% with "admin" as current_page  %}
+    {% include 'common/navbar.html' %}
+{% endwith %}
 
 <div class="container">
             <form class="form-horizontal login-form" action="{% url 'webgui.views.delete_bottle' bottle.id %}" method="post">{% csrf_token %}
                 {% if cocktails  %}
                     <div class="alert alert-danger" role="alert"><strong>Attention! </strong>La suppresion de cette bouteille entrainera la supression des cocktails ci dessous</div>
+                    <div class="well">
                     {% for cocktail in cocktails %}
                         <li>{{ cocktail.name }}</li>
                     {% endfor %}
+                    </div>
                 {% endif %}
                 <br>
                 <h3 class="tile-title">Confirmer la suppression</h3>

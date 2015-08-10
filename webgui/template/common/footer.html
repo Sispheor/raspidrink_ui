@@ -1,13 +1,27 @@
-<nav class="navbar navbar-inverse navbar-fixed-bottom">
+<nav class="navbar navbar-default navbar-fixed-bottom">
   <div class="container">
     <p class="navbar-text">
       <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>
-      <Strong>Bar Pi.</Strong> The ultimate drunk maker.
+      <Strong>RaspiDrink.</Strong> The ultimate drunk maker.
     </p>
 
   </div>
 </nav>
 
+<!-- jQuery  -->
+<script src="{{ STATIC_URL }}jquery.js"></script>
+<script src="{{ STATIC_URL }}dist/js/bootstrap.min.js"></script>
+<!-- Personnal JS -->
+<script src="{{ STATIC_URL }}barpi.js"></script>
+
+<script src="{{ STATIC_URL }}dist/js/ripples.min.js"></script>
+<script src="{{ STATIC_URL }}dist/js/material.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // This command is used to initialize some elements and make them work properly
+        $.material.init();
+    });
+</script>
 
 
 </div>

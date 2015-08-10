@@ -1,18 +1,28 @@
 <!-- Header -->
 {% include 'common/header.html' %}
 
-<!-- navbar -->
+<!-- navbar-admin -->
+{% with "admin" as current_page  %}
 {% include 'common/navbar.html' %}
+{% endwith %}
 
 <div class="container">
-    <form class="form-horizontal login-form" action="{% url 'webgui.views.create_bottle' %}" method="POST">{% csrf_token %}
+    <div class="col-lg-4 col-lg-offset-4">
+        <div class="well">
+            <fieldset>
+                <legend>Ajout d'une bouteille</legend>
+                <form class="form-horizontal login-form" action="{% url 'webgui.views.create_bottle' %}" method="POST">
+                    {% csrf_token %}
 
-            {{ form.as_p }}
+                    {{ form.as_p }}
 
-        <button type="submit" class="btn btn-success">
-          <i class="glyphicon glyphicon-ok"></i> Ajouter la bouteille
-        </button>
-    </form>
+                    <button type="submit" class="btn btn-success">
+                        <i class="glyphicon glyphicon-ok"></i> Ajouter la bouteille
+                    </button>
+                </form>
+            </fieldset>
+        </div>
+    </div>
 </div>
 <!-- footer -->
 {% include 'common/footer.html' %}

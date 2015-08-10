@@ -5,23 +5,32 @@
 {% include 'common/navbar.html' %}
 
 <div class="container">
-    <form class="form-horizontal login-form" action="{% url 'webgui.views.create_cocktail' %}" method="POST">{% csrf_token %}
-        <div class="section">
-            {{ bottle_list_form.as_p }}
+    <div class="col-lg-4 col-lg-offset-4">
+        <div class="well">
+            <fieldset>
+                <legend>Création d'un coktail</legend>
+                <form class="form-group" action="{% url 'webgui.views.create_cocktail' %}" method="POST">{% csrf_token %}
+                    <div class="section">
+                        {{ bottle_list_form.as_p }}
+                    </div>
+                    <h4>Recette:</h4>
+                    {{ cocktail_item_formset.management_form }}
+                    {% for form in cocktail_item_formset.forms %}
+                    <div class="item">
+                        {{ form.as_p }}
+                        <p style=""><a class="btn btn-danger delete" href="#"><span class="glyphicon glyphicon-trash"
+                                                                                    aria-hidden="true"></span></a></p>
+                    </div>
+                    {% endfor %}
+                    <p><a id="add" class="btn btn-primary" href="#"><span class="glyphicon glyphicon-plus"
+                                                                          aria-hidden="true"></span></a></p>
+                    <button type="submit" class="btn btn-success">
+                        <i class="glyphicon glyphicon-ok"></i> Créer le cocktail
+                    </button>
+                </form>
+            </fieldset>
         </div>
-        <h4>Recette:</h4>
-        {{ cocktail_item_formset.management_form }}
-        {% for form in cocktail_item_formset.forms %}
-        <div class="item">
-            {{ form.as_p }}
-            <p style=""><a class="btn btn-danger delete" href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></p>
-        </div>
-        {% endfor %}
-        <p><a id="add" class="btn btn-primary" href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></p>
-        <button type="submit" class="btn btn-success">
-          <i class="glyphicon glyphicon-ok"></i> Créer le cocktail
-        </button>
-    </form>
+    </div>
 </div>
 <!-- footer -->
 {% include 'common/footer.html' %}

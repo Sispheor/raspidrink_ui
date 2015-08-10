@@ -47,6 +47,7 @@ class BottleForm(ModelForm):
 
     class Meta:
         model = Bottle
+        fields = ['name', 'slot']
 
 
 
