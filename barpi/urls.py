@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^delete_bottle/(\d+)/$', 'webgui.views.delete_bottle'),
     url(r'^create_bottle/$', 'webgui.views.create_bottle'),
     url(r'^update_bottle/(\d+)/$', 'webgui.views.update_bottle'),
-
+    url(r'^run_cocktail/(\d+)/$', 'webgui.views.run_cocktail'),
+    url(r'^run_random/$', 'webgui.views.run_random'),
 
 )

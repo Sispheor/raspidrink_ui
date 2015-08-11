@@ -1,0 +1,42 @@
+<!-- Header -->
+{% include 'common/header.html' %}
+
+<!-- navbar -->
+{% include 'common/navbar.html' %}
+
+<div class="container">
+    <input id="max_time" type="hidden" name="max_time" value="{{ max_time }}">
+
+    <div class="jumbotron">
+        <h1>Cocktail en cours de création</h1><br><br>
+        <p>Le cocktail <span class="text-primary">{{ cocktail }}</span> est en cours de fabrication par <span class="text-primary">RaspiDrink</span>.</p>
+
+        <div class="progress">
+            <div id="progress_bar" class="progress-bar progress-bar-primary" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title">Cocktail ready !</h3>
+            </div>
+            <div class="modal-body">
+                <p>Le cocktail est pret a être dégusté</p>
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'webgui.views.homepage' %}" class="btn btn-primary">Merci RaspiDrink !</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- footer -->
+{% include 'common/footer.html' %}
+
+<!-- progress bar -->
+<script src="{{ STATIC_URL }}progress_bar_time.js"></script>

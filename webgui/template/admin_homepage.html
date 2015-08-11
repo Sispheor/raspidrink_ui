@@ -3,52 +3,48 @@
 
 <!-- navbar-admin -->
 {% with "admin" as current_page  %}
-    {% include 'common/navbar.html' %}
+{% include 'common/navbar.html' %}
 {% endwith %}
 <!-- Message -->
 {% include 'common/messages.html' %}
 
 <div class="container">
     <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-8">
-                <div style="width:700px; margin:20px 10px" class="togglebutton togglebutton-material-pink">
-                    <label>
-                        Arret / Marche de l'ensemble des pompes
-                        <input style="float: right;" type="checkbox" checked="">
-                    </label>
-                </div>
-                <div  style="width:700px; margin:20px 10px" class="togglebutton togglebutton-material-deep-orange">
-                    <label>
-                        Inverser le sens du flux
-                        <input style="float: right;" type="checkbox">
-                    </label>
-                </div>
+            <h3 class="text-primary">Contrôle des pompes</h3>
+            Ensemble du système: &nbsp &nbsp
+            <a href="#" class="btn btn-default btn-raised">Arret</a>
+            <a href="#" class="btn btn-info btn-raised">Marche</a>
+
+            <div class="togglebutton togglebutton-material-deep-orange">
+                <label>
+                    Inverser le sens du flux: &nbsp &nbsp
+                    <input style="float: right;" type="checkbox">
+                </label>
             </div>
-            <div class="col-md-4">
-                <!-- create bottle button -->
-                <a class="btn btn-primary btn-fab btn-raised mdi-content-add right-corner-btn"
-                   href="{% url 'webgui.views.create_bottle'%}"></a>
-            </div>
-        </div>
+
+    </div>
+    <div class="jumbotron">
+        <!-- create bottle button -->
+        <a class="btn btn-primary btn-fab btn-raised mdi-content-add right-corner-btn"
+           href="{% url 'webgui.views.create_bottle'%}"></a>
 
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Nom</th>
                 <th>Slot</th>
+                <th>Bouteille</th>
                 <th>Editer</th>
                 <th>Supprimer</th>
-                <th>Off / On</th>
+                <th>Arret / Marche</th>
             </tr>
             </thead>
             {% for bottle in bottles %}
             <tr>
                 <th>
-                    {{bottle.name}}
+                    {{bottle.slot}}
                 </th>
                 <th>
-                    {{bottle.slot}}
+                    {{bottle.name}}
                 </th>
                 <th>
                     <a href="{% url 'webgui.views.update_bottle' bottle.id %}" type="button"
@@ -63,11 +59,8 @@
                     </a>
                 </th>
                 <th>
-                    <div class="togglebutton">
-                        <label>
-                            <input type="checkbox">
-                        </label>
-                    </div>
+                    <a href="#" class="btn btn-default btn-raised">Off</a>
+                    <a href="#" class="btn btn-info btn-raised">On</a>
                 </th>
             </tr>
             {% endfor %}
@@ -77,19 +70,19 @@
 
 </div>
 <style>
-                #toggle-button h2 {
-                  font-size: 18.7199993133545px;
-                  font-weight: bold;
-                  margin-bottom: 30px;
-                  margin-top: 50px;
-                }
-                #toggle-button .togglebutton label {
-                  margin: 20px 10px;
-                  width: 200px;
-                }
-                #toggle-button .togglebutton .toggle {
-                  float: right;
-                }
-              </style>
+    #toggle-button h2 {
+    font-size: 18.7199993133545px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    }
+    #toggle-button .togglebutton label {
+    margin: 20px 10px;
+    width: 200px;
+    }
+    #toggle-button .togglebutton .toggle {
+    float: right;
+    }
+</style>
 <!-- footer -->
 {% include 'common/footer.html' %}

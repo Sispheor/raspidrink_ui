@@ -7,6 +7,7 @@ from django.core.context_processors import csrf
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from random import randint
 
 
 def homepage(request):
@@ -141,5 +142,22 @@ def update_bottle(request, id):
                                                   'bottle': bottle})
 
 
+def run_cocktail(request, id):
+    # get cocktail by id
+    cocktail = Cocktail.objects.get(id=id)
+    # TODO: call rasp lib
+    max_time = 1000
+    return render(request, "run_cocktail.html", {'max_time': max_time,
+                                                 'cocktail': cocktail})
+
+def run_random(request):
+    # get all cocktail
+    cocktails = Cocktail.objects.all()
+    # random
+    cocktail = cocktails[randint(0, len(cocktails))]
+    # TODO: call rasp lib
+    max_time = 1000
+    return render(request, "run_cocktail.html", {'max_time': max_time,
+                                                 'cocktail': cocktail})
 
 
