@@ -22,7 +22,7 @@ class BottleItemForm(forms.Form):
                                     widget=forms.Select(attrs={'class': 'form-control'}))
 
     volume = forms.IntegerField(label="Volume en cl",
-                                widget=forms.TextInput(attrs={'class': 'form-control input-sm'}))
+                                widget=forms.NumberInput(attrs={'class': 'form-control input-sm'}))
 
 
 class LoginForm(forms.Form):

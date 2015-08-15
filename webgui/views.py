@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from webgui.form import *
 from utils.random_cocktail import *
+from utils.check_form import *
 
 
 def homepage(request):
@@ -36,21 +37,33 @@ def create_cocktail(request):
         bottle_list_form = CoktailForm(request.POST)  # A form bound to the POST data
         # Create a formset from the submitted data
         cocktail_item_formset = BottleItemFormSet(request.POST, request.FILES)
-
+        # check form is ok
         if bottle_list_form.is_valid() and cocktail_item_formset.is_valid():
-            # create the cocktail
-            cocktail = Cocktail()
-            cocktail.lock = False
-            cocktail.name = bottle_list_form.cleaned_data['name']
-            cocktail.save()
+            # check total volume does not exceed 20 cl
+            if is_total_volume_exceed_20cl(cocktail_item_formset):
+                messages.add_message(request, messages.ERROR,
+                                     "Le volume total doit etre inférieur ou égal à 20 cl",
+                                     extra_tags='warning')
+            else:
+                # check not multiple same bottle
+                if is_same_bootle_in_list(cocktail_item_formset):
+                    messages.add_message(request, messages.ERROR,
+                                         "Ne pas utiliser une bouteille plus d'une fois dans le même cocktail",
+                                         extra_tags='warning')
+                else:
+                    # Everything ok, create the cocktail
+                    cocktail = Cocktail()
+                    cocktail.lock = False
+                    cocktail.name = bottle_list_form.cleaned_data['name']
+                    cocktail.save()
 
-            for form in cocktail_item_formset.forms:
-                volume = form.cleaned_data['volume']
-                bottle = Bottle.objects.get(id=form.cleaned_data['bottle'].id)
-                info_cocktail = Cocktailinfo(bottle=bottle, cocktail=cocktail, volume=volume)
-                info_cocktail.save()
-            messages.add_message(request, messages.SUCCESS, "Cocktail créé avec succès")
-            return redirect('webgui.views.homepage')
+                    for form in cocktail_item_formset.forms:
+                        volume = form.cleaned_data['volume']
+                        bottle = Bottle.objects.get(id=form.cleaned_data['bottle'].id)
+                        info_cocktail = Cocktailinfo(bottle=bottle, cocktail=cocktail, volume=volume)
+                        info_cocktail.save()
+                    messages.add_message(request, messages.SUCCESS, "Cocktail créé avec succès")
+                    return redirect('webgui.views.homepage')
     else:
         bottle_list_form = CoktailForm()
         cocktail_item_formset = BottleItemFormSet()
