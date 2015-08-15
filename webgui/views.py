@@ -182,8 +182,8 @@ def run_random(request):
                              extra_tags='warning')
         return redirect('webgui.views.homepage')
     else:
-        # random
-        cocktail = cocktails[randint(0, len(cocktails))]
+        # take a cocktail randomly
+        cocktail = random.choice(cocktails)
         # TODO: call rasp lib
         max_time = 1000
         return render(request, "run_cocktail.html", {'max_time': max_time,
