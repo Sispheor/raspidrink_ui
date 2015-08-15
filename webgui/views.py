@@ -199,24 +199,32 @@ def run_coffin(request):
         random_list_with_zero = rand_int_vec(list_size,
                                              list_sum_value,
                                              distribution=rand_floats(list_size))
-
         # remove zero in this list
         random_list = []
         for el in random_list_with_zero:
             if el != 0:
                 random_list.append(el)
 
+        number_of_bottle = len(random_list)
         print "number of bottle used: "+str(len(random_list))
         print "list: "+str(random_list)
 
         # get randomly item in the list switch the list_size
-        bottles = random.sample(bottles, list_size)
-        print bottles
+        bottles = set(bottles)
+        bottles_selected = random.sample(bottles, number_of_bottle)
+        print bottles_selected
 
-        # create a fake cocktail without save it in database
-        coffin_cocktail = Cocktail()
+        # we cannot use the Cocktail object without saving it
+        bottles = []
+        i = 0
+        for bottle in bottles_selected:
+            list_bottle_volume = {'bottle_name': bottle.name, 'volume': random_list[i]}
+            bottles.append(list_bottle_volume)
+            i += 1
 
+        # TODO: get max time from the bigger volume
         # TODO: call rasp lib
         max_time = 1000
-        return render(request, "run_cocktail.html", {'max_time': max_time,
-                                                     'cocktail': coffin_cocktail})
+        print bottles
+        return render(request, "run_coffin.html", {'max_time': max_time,
+                                                   'bottles': bottles})

@@ -4,7 +4,7 @@ from models import Bottle, Cocktail, Cocktailinfo
 
 # create bottle
 
-bottle1 = Bottle.objects.create(name="Rhum", slot=1)
+bottle1 = Bottle.objects.create(name="Vodka", slot=1)
 bottle2 = Bottle.objects.create(name="Martini", slot=2)
 bottle3 = Bottle.objects.create(name="Rhum", slot=3)
 bottle4 = Bottle.objects.create(name="Tekila", slot=4)
@@ -19,8 +19,8 @@ bottle12 = Bottle.objects.create(name="Sirop de fraise", slot=12)
 bottle13 = Bottle.objects.create(name="Orange", slot=13)
 bottle14 = Bottle.objects.create(name="Perrier", slot=14)
 bottle15 = Bottle.objects.create(name="Oasis", slot=15)
-
 """
+
 # create cocktail
 pina = Cocktail.objects.create(name="Pina Colada")
 
@@ -55,4 +55,9 @@ for coktailinfo in coktailinfos:
 all_cocktail = Cocktail.objects.all()
 for cocktail in all_cocktail:
     cocktail.delete()
+
+
+bottles = Bottle.objects.all()
+for bottle in bottles:
+    bottle.delete()
 """
