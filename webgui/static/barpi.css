@@ -14,10 +14,10 @@ ul#id_bottle {
 }
 
 body {
-background-color: #eee;
+    background-color: #eee;
+    padding-bottom: 60px;
 }
 
 .right-corner-btn {
     float: right;
-
 }

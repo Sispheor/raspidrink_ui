@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
+from random import randint
+
 from django.shortcuts import render, redirect, get_object_or_404
-from models import Bottle, Cocktail, Cocktailinfo
-from webgui.form import *
 from django.forms.formsets import formset_factory, BaseFormSet
 from django.core.context_processors import csrf
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from random import randint
+from webgui.form import *
+from utils.random_cocktail import *
 
 
 def homepage(request):
@@ -64,7 +65,7 @@ def create_cocktail(request):
 def delete_cocktail(request, id):
     cocktail = Cocktail.objects.get(id=id)
     cocktail.delete()
-    messages.add_message(request, messages.SUCCESS, "Cocktail supprimé")
+    messages.add_message(request, messages.SUCCESS, "Cocktail supprimé", extra_tags='info')
     return redirect('webgui.views.homepage')
 
 
@@ -91,6 +92,7 @@ def login_page(request):
         form = LoginForm()  # An unbound form
         return render(request, 'login_form.html', {'form': form})
 
+
 def logout_view(request):
     logout(request)
     return redirect('webgui.views.homepage')
@@ -113,7 +115,9 @@ def delete_bottle(request, id):
         # remove bottle
         bottle = Bottle.objects.get(id=id)
         bottle.delete()
-        messages.add_message(request, messages.SUCCESS, "Bouteille supprimée")
+        messages.add_message(request, messages.SUCCESS,
+                             "Bouteille supprimée",
+                             extra_tags='info')
         return redirect('webgui.views.admin_homepage')
     else:
         return render(request, 'delete_bottle.html', {'bottle': bottle, 'cocktails': cocktails})
@@ -125,6 +129,8 @@ def create_bottle(request):
         form = BottleForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS,
+                                 "Bouteille ajoutée")
             return redirect('webgui.views.admin_homepage')
     else:
         form = BottleForm()
@@ -137,6 +143,9 @@ def update_bottle(request, id):
     form = BottleForm(request.POST or None, instance=bottle)
     if form.is_valid():
         form.save()
+        messages.add_message(request, messages.SUCCESS,
+                             "Bouteille mise à jour",
+                             extra_tags='info')
         return redirect('webgui.views.admin_homepage')
     return render(request, "update_bottle.html", {'form': form,
                                                   'bottle': bottle})
@@ -150,14 +159,64 @@ def run_cocktail(request, id):
     return render(request, "run_cocktail.html", {'max_time': max_time,
                                                  'cocktail': cocktail})
 
+
 def run_random(request):
     # get all cocktail
     cocktails = Cocktail.objects.all()
-    # random
-    cocktail = cocktails[randint(0, len(cocktails))]
-    # TODO: call rasp lib
-    max_time = 1000
-    return render(request, "run_cocktail.html", {'max_time': max_time,
-                                                 'cocktail': cocktail})
+    if len(cocktails) < 1:
+        messages.add_message(request, messages.ERROR,
+                             "Aucun cocktail dans le système",
+                             extra_tags='warning')
+        return redirect('webgui.views.homepage')
+    else:
+        # random
+        cocktail = cocktails[randint(0, len(cocktails))]
+        # TODO: call rasp lib
+        max_time = 1000
+        return render(request, "run_cocktail.html", {'max_time': max_time,
+                                                     'cocktail': cocktail})
 
 
+def run_coffin(request):
+    # get all bottle
+    bottles = Bottle.objects.all()
+
+    # get the number of total bottle to take random
+    number_of_bottle = len(bottles)
+
+    if number_of_bottle < 1:
+        messages.add_message(request, messages.ERROR,
+                             "Aucune bouteille dans le système",
+                             extra_tags='warning')
+        return redirect('webgui.views.homepage')
+    else:
+        # random a number of bottle from 1 to the maximum bottle available
+        list_size = randint(1, number_of_bottle)
+        # the sum value is tne total volume. In ou case is always 20 cl
+        list_sum_value = 20
+
+        # get list of random number
+        random_list_with_zero = rand_int_vec(list_size,
+                                             list_sum_value,
+                                             distribution=rand_floats(list_size))
+
+        # remove zero in this list
+        random_list = []
+        for el in random_list_with_zero:
+            if el != 0:
+                random_list.append(el)
+
+        print "number of bottle used: "+str(len(random_list))
+        print "list: "+str(random_list)
+
+        # get randomly item in the list switch the list_size
+        bottles = random.sample(bottles, list_size)
+        print bottles
+
+        # create a fake cocktail without save it in database
+        coffin_cocktail = Cocktail()
+
+        # TODO: call rasp lib
+        max_time = 1000
+        return render(request, "run_cocktail.html", {'max_time': max_time,
+                                                     'cocktail': coffin_cocktail})
