@@ -3,7 +3,7 @@
 
 <!-- navbar -->
 {% with "home" as current_page %}
-    {% include 'common/navbar.html' %}
+{% include 'common/navbar.html' %}
 {% endwith %}
 
 <!-- Message -->
@@ -15,6 +15,7 @@
         <div class="col-md-6">
             <div class="well">
                 <h1 class="text-primary text-center">Random</h1>
+
                 <p>Prend au hazard un des cocktails de la liste existante.</p>
                 <a class="btn btn-primary btn-large btn-block" href="{% url 'webgui.views.run_random' %}">Inch Allah</a>
             </div>
@@ -23,16 +24,17 @@
         <div class="col-md-6">
             <div class="well">
                 <h1 class="text-primary text-center">Cerceuille</h1>
+
                 <p>Prend au hazard les ingrédients et la quantité de chacuns pour un verre unique.</p>
                 <a class="btn btn-danger btn-large btn-block" href="{% url 'webgui.views.run_coffin' %}">Adieu</a>
             </div>
         </div>
     </div>
-    {% if coktails %}
+
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-8">
-                <h3 class="text-primary" >Liste des cocktails</h3>
+                <h3 class="text-primary">Liste des cocktails</h3>
             </div>
             <div class="col-md-4">
                 <!-- create cocktail button -->
@@ -56,12 +58,13 @@
                     {{cocktail.name}}
                 </th>
                 <th>
-                    {% for bottle in cocktail.bottles.all %}
-                    {{bottle.name}},
-                    {% endfor %}
+                    <a onclick="open_modal_detail({{cocktail.id}})" class="btn btn-default btn-raised">
+                        <span class="glyphicon glyphicon-list"></span>
+                    </a>
                 </th>
                 <th>
-                    <a href="{% url 'webgui.views.run_cocktail' cocktail.id %}" type="button" class="btn btn-info btn-raised">
+                    <a href="{% url 'webgui.views.run_cocktail' cocktail.id %}" type="button"
+                       class="btn btn-info btn-raised">
                         <span class="glyphicon glyphicon-glass"></span>
                     </a>
                 </th>
@@ -78,12 +81,48 @@
                 </th>
             </tr>
             {% endfor %}
-
         </table>
-
     </div>
-    {% endif %}
 </div>
+
+<!-- Modal detail -->
+{% for cocktail in coktails %}
+<div id="modal-detail-cocktail-{{ cocktail.id }}" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Contenu du cocktail <span class="text-primary">{{cocktail.name}}</span></h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-hover ">
+                    <thead>
+                    <tr>
+                        <th>Bouteille</th>
+                        <th>Volume (cl)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for bottle in cocktail.bottles.all %}
+                    <tr>
+                        <td>{{bottle.name}}</td>
+                        <td>
+                            {% for cocktailinfo in bottle.cocktailinfo_set.all %} {{ cocktailinfo.volume }} cl{% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
 
 <!-- footer -->
 {% include 'common/footer.html' %}

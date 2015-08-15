@@ -3,6 +3,12 @@ setTimeout(function() {
     $('#messages').fadeOut('fast');
 }, 3000); // <-- time in milliseconds
 
+//
+function open_modal_detail(id){
+    var modal_id = "modal-detail-cocktail-"+id
+    $('#'+modal_id).modal('show');
+}
+
 $(document).ready(function () {
     // Code adapted from http://djangosnippets.org/snippets/1389/
     function updateElementIndex(el, prefix, ndx) {
@@ -78,4 +84,6 @@ $(document).ready(function () {
         return deleteForm(this, "form");
     });
 });
+
+
 
