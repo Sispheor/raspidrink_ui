@@ -46,9 +46,8 @@
             <thead>
             <tr>
                 <th>Nom</th>
-                <th>Contenu</th>
                 <th>Lancer</th>
-                <th>Editer</th>
+                <th>Contenu</th>
                 <th>Supprimer</th>
             </tr>
             </thead>
@@ -58,25 +57,20 @@
                     {{cocktail.name}}
                 </th>
                 <th>
-                    <a onclick="open_modal_detail({{cocktail.id}})" class="btn btn-default btn-raised">
-                        <span class="glyphicon glyphicon-list"></span>
-                    </a>
-                </th>
-                <th>
                     <a href="{% url 'webgui.views.run_cocktail' cocktail.id %}" type="button"
-                       class="btn btn-info btn-raised">
-                        <span class="glyphicon glyphicon-glass"></span>
+                       class="btn btn-primary btn-raised">
+                        <span class="mdi-av-play-arrow"></span>
                     </a>
                 </th>
                 <th>
-                    <a href="#" type="button" class="btn btn-primary btn-raised">
-                        <span class="glyphicon glyphicon-edit"></span>
+                    <a onclick="open_modal_detail({{cocktail.id}})" class="btn btn-info btn-raised">
+                        <span class="mdi-editor-format-list-bulleted"></span>
                     </a>
                 </th>
                 <th>
                     <a href="{% url 'webgui.views.delete_cocktail' cocktail.id %}" type="button"
-                       class="btn btn-danger btn-raised">
-                        <span class="glyphicon glyphicon-trash"></span>
+                       class="btn btn-default btn-raised">
+                        <span class="mdi-action-delete"></span>
                     </a>
                 </th>
             </tr>
@@ -99,7 +93,7 @@
                     <thead>
                     <tr>
                         <th>Bouteille</th>
-                        <th>Volume (cl)</th>
+                        <th>Volume</th>
                     </tr>
                     </thead>
                     <tbody>
