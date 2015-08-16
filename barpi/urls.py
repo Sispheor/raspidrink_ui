@@ -1,11 +1,9 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'barpi.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'webgui.views.homepage'),
     url(r'^create_cocktail/$', 'webgui.views.create_cocktail'),
@@ -19,6 +17,6 @@ urlpatterns = patterns('',
     url(r'^run_cocktail/(\d+)/$', 'webgui.views.run_cocktail'),
     url(r'^run_random/$', 'webgui.views.run_random'),
     url(r'^run_coffin/$', 'webgui.views.run_coffin'),
-
+    url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 
 )

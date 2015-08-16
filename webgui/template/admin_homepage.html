@@ -60,7 +60,7 @@
                 </th>
                 <th>
                     <a href="#" class="btn btn-default btn-raised">Off</a>
-                    <a href="#" class="btn btn-info btn-raised">On</a>
+                    <a onclick="Dajaxice.webgui.active_pump(active_pump_callback, {'id': {{bottle.id}} });" class="btn btn-info btn-raised">On</a>
                 </th>
             </tr>
             {% endfor %}
@@ -69,20 +69,6 @@
 
 
 </div>
-<style>
-    #toggle-button h2 {
-    font-size: 18.7199993133545px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    margin-top: 50px;
-    }
-    #toggle-button .togglebutton label {
-    margin: 20px 10px;
-    width: 200px;
-    }
-    #toggle-button .togglebutton .toggle {
-    float: right;
-    }
-</style>
+
 <!-- footer -->
 {% include 'common/footer.html' %}

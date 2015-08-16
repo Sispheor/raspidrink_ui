@@ -241,3 +241,5 @@ def run_coffin(request):
         print bottles
         return render(request, "run_coffin.html", {'max_time': max_time,
                                                    'bottles': bottles})
+
+

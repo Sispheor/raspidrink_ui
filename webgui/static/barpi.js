@@ -9,6 +9,10 @@ function open_modal_detail(id){
     $('#'+modal_id).modal('show');
 }
 
+function active_pump_callback(data){
+    alert(data.message);
+}
+
 $(document).ready(function () {
     // Code adapted from http://djangosnippets.org/snippets/1389/
     function updateElementIndex(el, prefix, ndx) {
