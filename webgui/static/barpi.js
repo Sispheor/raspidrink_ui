@@ -41,15 +41,15 @@ $(document).ready(function () {
             }
         } // End if
         else {
-            alert("You have to enter at least one todo item!");
+            alert("Il faut au moins une bouteille. You fucking know it.");
         }
         return false;
     }
 
     function addForm(btn, prefix) {
         var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-        // You can only submit a maximum of 10 todo items
-        if (formCount < 10) {
+        // You can only submit a maximum of 16 todo items
+        if (formCount < 16) {
             // Clone a form (without event handlers) from the first form
             var row = $(".item:first").clone(false).get(0);
             // Insert it after the last form
@@ -75,7 +75,7 @@ $(document).ready(function () {
 
         } // End if
         else {
-            alert("Sorry, you can only enter a maximum of ten items.");
+            alert("Pas plus de 15 bouteilles");
         }
         return false;
     }

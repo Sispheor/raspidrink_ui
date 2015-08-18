@@ -168,7 +168,7 @@ def run_cocktail(request, id):
     # get cocktail by id
     cocktail = Cocktail.objects.get(id=id)
     # TODO: call rasp lib
-    max_time = 1000
+    max_time = 10000
     return render(request, "run_cocktail.html", {'max_time': max_time,
                                                  'cocktail': cocktail})
 
