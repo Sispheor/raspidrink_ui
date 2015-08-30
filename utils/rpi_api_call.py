@@ -1,4 +1,7 @@
 from webgui.models import *
+from django.conf import settings
+from requests import put, get, post
+import json
 
 
 def get_highter_volume(cocktail):
@@ -28,3 +31,13 @@ def get_playload_from_cocktail(cocktail):
             table_bottle_slot_dict.append(bottle_slot_dict)
             payload.update({'data': table_bottle_slot_dict})
     return payload
+
+
+def call_api(url_to_call, payload):
+    url = 'http://'+settings.RPI_IP+':5000'
+    headers = {'content-type': 'application/json'}
+    r = post(url+url_to_call, data=json.dumps(payload), headers=headers)
+
+    # decode json response. This give a string
+    response = json.loads(r.text)
+    return response
