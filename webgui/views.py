@@ -10,6 +10,10 @@ from django.contrib.auth.decorators import login_required
 from webgui.form import *
 from utils.random_cocktail import *
 from utils.check_form import *
+import json
+from requests import put, get, post
+from django.conf import settings
+from utils.get_highter import get_highter_volume
 
 
 def homepage(request):
@@ -167,11 +171,35 @@ def update_bottle(request, id):
 def run_cocktail(request, id):
     # get cocktail by id
     cocktail = Cocktail.objects.get(id=id)
-    # TODO: call rasp lib
-    max_time = 10000
-    return render(request, "run_cocktail.html", {'max_time': max_time,
-                                                 'cocktail': cocktail})
+    # create JSON payload from cocktail object
+    payload = {'data': []}
+    table_bottle_slot_dict = []
+    for bottle in cocktail.bottles.all():
+        info = Cocktailinfo.objects.get(bottle=bottle, cocktail=cocktail)
+        bottle_slot_dict = {'slot_id': bottle.slot, 'volume': info.volume}
+        table_bottle_slot_dict.append(bottle_slot_dict)
+        payload.update({'data': table_bottle_slot_dict})
 
+    # call rasp lib
+    url = 'http://'+settings.RPI_IP+':5000'
+    headers = {'content-type': 'application/json'}
+
+    # create cocktail payload to send to the RPI API
+    r = post(url+'/make_cocktail', data=json.dumps(payload), headers=headers)
+
+    # decode json response. This give a string
+    response = json.loads(r.text)
+
+    if response["status"] =="ok":
+        # Get the max time from the bigger volume. * 100 to get it in seconde
+        max_time = get_highter_volume(table_bottle_slot_dict) * 1000
+        return render(request, "run_cocktail.html", {'max_time': max_time,
+                                                     'cocktail': cocktail})
+    else:
+        messages.add_message(request, messages.ERROR,
+                             "Raspidrink est occupé",
+                             extra_tags='warning')
+        return redirect('webgui.views.homepage')
 
 def run_random(request):
     # get all cocktail
