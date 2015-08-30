@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from random import randint
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.formsets import formset_factory, BaseFormSet
 from django.core.context_processors import csrf
@@ -13,7 +12,7 @@ from utils.check_form import *
 import json
 from requests import put, get, post
 from django.conf import settings
-from utils.get_highter import get_highter_volume
+from utils.rpi_api_call import *
 
 
 def homepage(request):
@@ -172,19 +171,11 @@ def run_cocktail(request, id):
     # get cocktail by id
     cocktail = Cocktail.objects.get(id=id)
     # create JSON payload from cocktail object
-    payload = {'data': []}
-    table_bottle_slot_dict = []
-    for bottle in cocktail.bottles.all():
-        info = Cocktailinfo.objects.get(bottle=bottle, cocktail=cocktail)
-        bottle_slot_dict = {'slot_id': bottle.slot, 'volume': info.volume}
-        table_bottle_slot_dict.append(bottle_slot_dict)
-        payload.update({'data': table_bottle_slot_dict})
+    payload = get_playload_from_cocktail(cocktail)
 
     # call rasp lib
     url = 'http://'+settings.RPI_IP+':5000'
     headers = {'content-type': 'application/json'}
-
-    # create cocktail payload to send to the RPI API
     r = post(url+'/make_cocktail', data=json.dumps(payload), headers=headers)
 
     # decode json response. This give a string
@@ -192,7 +183,7 @@ def run_cocktail(request, id):
 
     if response["status"] =="ok":
         # Get the max time from the bigger volume. * 100 to get it in seconde
-        max_time = get_highter_volume(table_bottle_slot_dict) * 1000
+        max_time = get_highter_volume(cocktail) * 1000
         return render(request, "run_cocktail.html", {'max_time': max_time,
                                                      'cocktail': cocktail})
     else:

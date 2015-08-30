@@ -10,6 +10,7 @@ bottle3 = Bottle.objects.create(name="Rhum", slot=3)
 bottle4 = Bottle.objects.create(name="Tekila", slot=4)
 bottle5 = Bottle.objects.create(name="Whisky", slot=5)
 bottle6 = Bottle.objects.create(name="Triple sec", slot=6)
+"""
 bottle7 = Bottle.objects.create(name="Gin", slot=7)
 bottle8 = Bottle.objects.create(name="Curaçao bleu", slot=8)
 bottle9 = Bottle.objects.create(name="Sucre de canne", slot=9)
@@ -19,7 +20,7 @@ bottle12 = Bottle.objects.create(name="Sirop de fraise", slot=12)
 bottle13 = Bottle.objects.create(name="Orange", slot=13)
 bottle14 = Bottle.objects.create(name="Perrier", slot=14)
 bottle15 = Bottle.objects.create(name="Oasis", slot=15)
-"""
+
 
 # create cocktail
 pina = Cocktail.objects.create(name="Pina Colada")
