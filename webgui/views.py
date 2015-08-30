@@ -174,14 +174,9 @@ def run_cocktail(request, id):
     payload = get_playload_from_cocktail(cocktail)
 
     # call rasp lib
-    url = 'http://'+settings.RPI_IP+':5000'
-    headers = {'content-type': 'application/json'}
-    r = post(url+'/make_cocktail', data=json.dumps(payload), headers=headers)
+    response = call_api('/make_cocktail', payload)
 
-    # decode json response. This give a string
-    response = json.loads(r.text)
-
-    if response["status"] =="ok":
+    if response["status"] == "ok":
         # Get the max time from the bigger volume. * 100 to get it in seconde
         max_time = get_highter_volume(cocktail) * 1000
         return render(request, "run_cocktail.html", {'max_time': max_time,
@@ -191,6 +186,7 @@ def run_cocktail(request, id):
                              "Raspidrink est occupé",
                              extra_tags='warning')
         return redirect('webgui.views.homepage')
+
 
 def run_random(request):
     # get all cocktail
@@ -203,10 +199,22 @@ def run_random(request):
     else:
         # take a cocktail randomly
         cocktail = random.choice(cocktails)
-        # TODO: call rasp lib
-        max_time = 1000
-        return render(request, "run_cocktail.html", {'max_time': max_time,
-                                                     'cocktail': cocktail})
+        # create JSON payload from cocktail object
+        payload = get_playload_from_cocktail(cocktail)
+
+        # call rasp lib
+        response = call_api('/make_cocktail', payload)
+
+        if response["status"] == "ok":
+            # Get the max time from the bigger volume. * 100 to get it in seconde
+            max_time = get_highter_volume(cocktail) * 1000
+            return render(request, "run_cocktail.html", {'max_time': max_time,
+                                                         'cocktail': cocktail})
+        else:
+            messages.add_message(request, messages.ERROR,
+                                 "Raspidrink est occupé",
+                                 extra_tags='warning')
+            return redirect('webgui.views.homepage')
 
 
 def run_coffin(request):
