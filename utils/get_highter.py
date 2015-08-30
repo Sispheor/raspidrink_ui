@@ -7,4 +7,5 @@ def get_highter_volume(slot_volume_dict):
         list_volume = []
         for el in slot_volume_dict:
             list_volume.append(int(el['volume']))
+
         return max(list_volume)
