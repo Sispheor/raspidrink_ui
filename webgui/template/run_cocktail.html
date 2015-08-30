@@ -24,7 +24,8 @@
             <tr>
                 <td>{{bottle.name}}</td>
                 <td>
-                    {% for cocktailinfo in bottle.cocktailinfo_set.all %} {{ cocktailinfo.volume }} cl{% endfor %}
+                    {% load apptags %}
+                    {% custom_m2m bottle.id cocktail.id %}
                 </td>
             </tr>
             {% endfor %}

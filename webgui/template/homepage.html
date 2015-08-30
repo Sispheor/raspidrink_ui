@@ -102,7 +102,7 @@
                         <td>{{bottle.name}}</td>
                         <td>
                             {% load apptags %}
-                            {{ bottle.cocktailinfo_set.all|custom_m2m:forloop.parentloop.counter0 }} cl
+                            {% custom_m2m bottle.id cocktail.id %}
                         </td>
                     </tr>
                     {% endfor %}
