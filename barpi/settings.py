@@ -120,3 +120,6 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 # RAPI IP
 RPI_IP = '192.168.0.22'
+
+# Max volume in centiliter
+MAX_VOLUME = 20
