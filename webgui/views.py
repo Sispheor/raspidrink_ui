@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from random import randint
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.formsets import formset_factory, BaseFormSet
 from django.core.context_processors import csrf
@@ -9,9 +8,6 @@ from django.contrib.auth.decorators import login_required
 from webgui.form import *
 from utils.random_cocktail import *
 from utils.check_form import *
-import json
-from requests import put, get, post
-from django.conf import settings
 from utils.rpi_api_call import *
 
 
@@ -230,43 +226,25 @@ def run_coffin(request):
                              extra_tags='warning')
         return redirect('webgui.views.homepage')
     else:
-        # random a number of bottle from 1 to the maximum bottle available
-        list_size = randint(1, number_of_bottle)
-        # the sum value is tne total volume. In ou case is always 20 cl
-        list_sum_value = 20
+        # get a randomly created cocktail
+        bottles = get_random_cocktail(bottles, number_of_bottle)
+        # prepare json payload
+        payload = {'data': []}
+        payload.update({'data': bottles})
+        # call rasp lib
+        response = call_api('/make_cocktail', payload)
 
-        # get list of random number
-        random_list_with_zero = rand_int_vec(list_size,
-                                             list_sum_value,
-                                             distribution=rand_floats(list_size))
-        # remove zero in this list
-        random_list = []
-        for el in random_list_with_zero:
-            if el != 0:
-                random_list.append(el)
+        if response["status"] == "ok":
+            # TODO: get max time from the bigger volume
+            # TODO: call rasp lib
+            max_time = 1000
 
-        number_of_bottle = len(random_list)
-        print "number of bottle used: "+str(len(random_list))
-        print "list: "+str(random_list)
+            return render(request, "run_coffin.html", {'max_time': max_time,
+                                                       'bottles': bottles})
 
-        # get randomly item in the list switch the list_size
-        bottles = set(bottles)
-        bottles_selected = random.sample(bottles, number_of_bottle)
-        print bottles_selected
-
-        # we cannot use the Cocktail object without saving it
-        bottles = []
-        i = 0
-        for bottle in bottles_selected:
-            list_bottle_volume = {'bottle_name': bottle.name, 'volume': random_list[i]}
-            bottles.append(list_bottle_volume)
-            i += 1
-
-        # TODO: get max time from the bigger volume
-        # TODO: call rasp lib
-        max_time = 1000
-        print bottles
-        return render(request, "run_coffin.html", {'max_time': max_time,
-                                                   'bottles': bottles})
-
+        else:
+            messages.add_message(request, messages.ERROR,
+                                 "Raspidrink est occupé",
+                                 extra_tags='warning')
+            return redirect('webgui.views.homepage')
 
