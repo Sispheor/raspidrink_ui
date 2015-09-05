@@ -202,7 +202,7 @@ def run_random(request):
         response = call_api('/make_cocktail', payload)
 
         if response["status"] == "ok":
-            # Get the max time from the bigger volume. * 100 to get it in seconde
+            # Get the max time from the bigger volume. * 1000 to get it in seconde
             max_time = get_highter_volume(cocktail) * 1000
             return render(request, "run_cocktail.html", {'max_time': max_time,
                                                          'cocktail': cocktail})
@@ -236,9 +236,7 @@ def run_coffin(request):
 
         if response["status"] == "ok":
             # TODO: get max time from the bigger volume
-            # TODO: call rasp lib
-            max_time = 1000
-
+            max_time = get_highter_volume(bottles) * 1000
             return render(request, "run_coffin.html", {'max_time': max_time,
                                                        'bottles': bottles})
 
