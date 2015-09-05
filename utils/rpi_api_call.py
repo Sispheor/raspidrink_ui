@@ -11,9 +11,15 @@ def get_highter_volume(cocktail):
     :return: Integer, the highter volume from all bottle in the given cocktail
     """
     list_volume = []
-    for bottle in cocktail.bottles.all():
-        info = Cocktailinfo.objects.get(bottle=bottle, cocktail=cocktail)
-        list_volume.append(info.volume)
+    if isinstance(cocktail, Cocktail):
+        # The received object is a Cocktail model
+        for bottle in cocktail.bottles.all():
+            info = Cocktailinfo.objects.get(bottle=bottle, cocktail=cocktail)
+            list_volume.append(info.volume)
+    else:
+        # The objct receive is not a Cocktail but a dict. It's a coffin so
+        for el in cocktail:
+            list_volume.append(el['volume'])
     return max(list_volume)
 
 
