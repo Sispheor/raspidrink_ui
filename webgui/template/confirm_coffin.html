@@ -1,0 +1,52 @@
+<!-- Header -->
+{% include 'common/header.html' %}
+
+<!-- navbar -->
+{% include 'common/navbar.html' %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well">
+                <fieldset>
+                    <legend>Vous vous engagez à boire la merde qui va sortir?</legend>
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for field in form %}
+                        {% if field.errors %}
+                        <li><strong>{{ field.label }}:</strong> {{ field.errors|striptags }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <form class="form-horizontal" action="{% url 'webgui.views.run_coffin' %}" method="POST">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <div class="form-group {% if field.errors %}has-error{% endif %}">
+                            <label for="{{field.name}}" class="col-sm-2 control-label">
+                                {{ field.label }}
+                            </label>
+
+                            <div class="col-sm-4">
+                                {{ field }}
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <a href="{% url 'webgui.views.homepage' %}" type="button"
+                           class="btn btn-default btn-raised">
+                            Annuler
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="glyphicon glyphicon-ok"></i> Confirmer
+                        </button>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+{% include 'common/footer.html' %}

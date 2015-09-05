@@ -50,7 +50,10 @@ class BottleForm(ModelForm):
         fields = ['name', 'slot']
 
 
-
-
+class ConfirmCoffin(forms.Form):
+    confirm_checkbox = forms.BooleanField(initial=False,
+                                          required=True,
+                                          label="Confirmation",
+                                          widget=forms.CheckboxInput(attrs={'class': 'form-control'}))
 
 

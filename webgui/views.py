@@ -214,35 +214,41 @@ def run_random(request):
 
 
 def run_coffin(request):
-    # get all bottle
-    bottles = Bottle.objects.all()
+    if request.POST:
+        form = ConfirmCoffin(request.POST)
+        if form.is_valid():
+            # get all bottle
+            bottles = Bottle.objects.all()
 
-    # get the number of total bottle to take random
-    number_of_bottle = len(bottles)
+            # get the number of total bottle to take random
+            number_of_bottle = len(bottles)
 
-    if number_of_bottle < 1:
-        messages.add_message(request, messages.ERROR,
-                             "Aucune bouteille dans le système",
-                             extra_tags='warning')
-        return redirect('webgui.views.homepage')
+            if number_of_bottle < 1:
+                messages.add_message(request, messages.ERROR,
+                                     "Aucune bouteille dans le système",
+                                     extra_tags='warning')
+                return redirect('webgui.views.homepage')
+            else:
+                # get a randomly created cocktail
+                bottles = get_random_cocktail(bottles, number_of_bottle)
+                # prepare json payload
+                payload = {'data': []}
+                payload.update({'data': bottles})
+                # call rasp lib
+                response = call_api('/make_cocktail', payload)
+
+                if response["status"] == "ok":
+                    # TODO: get max time from the bigger volume
+                    max_time = get_highter_volume(bottles) * 1000
+                    return render(request, "run_coffin.html", {'max_time': max_time,
+                                                               'bottles': bottles})
+
+                else:
+                    messages.add_message(request, messages.ERROR,
+                                         "Raspidrink est occupé",
+                                         extra_tags='warning')
+                    return redirect('webgui.views.homepage')
+
     else:
-        # get a randomly created cocktail
-        bottles = get_random_cocktail(bottles, number_of_bottle)
-        # prepare json payload
-        payload = {'data': []}
-        payload.update({'data': bottles})
-        # call rasp lib
-        response = call_api('/make_cocktail', payload)
-
-        if response["status"] == "ok":
-            # TODO: get max time from the bigger volume
-            max_time = get_highter_volume(bottles) * 1000
-            return render(request, "run_coffin.html", {'max_time': max_time,
-                                                       'bottles': bottles})
-
-        else:
-            messages.add_message(request, messages.ERROR,
-                                 "Raspidrink est occupé",
-                                 extra_tags='warning')
-            return redirect('webgui.views.homepage')
-
+        form = ConfirmCoffin()
+    return render(request, 'confirm_coffin.html', {'form': form})
