@@ -10,17 +10,14 @@
 
 <div class="container">
     <div class="jumbotron">
-            <h3 class="text-primary">Contrôle des pompes</h3>
-            Ensemble du système: &nbsp &nbsp
-            <a href="#" class="btn btn-default btn-raised">Arret</a>
-            <a href="#" class="btn btn-info btn-raised">Marche</a>
+            <h3 class="text-primary">Contrôle du système pompes</h3>
+            Ensemble des pompes: &nbsp &nbsp
+            <a href="#" onclick="Dajaxice.webgui.stop_all_pump(ajax_callback);" class="btn btn-default btn-raised">Off</a>
+            <a href="#" onclick="Dajaxice.webgui.start_all_pump(ajax_callback);" class="btn btn-info btn-raised">On</a>
 
-            <div class="togglebutton togglebutton-material-deep-orange">
-                <label>
-                    Inverser le sens du flux: &nbsp &nbsp
-                    <input style="float: right;" type="checkbox">
-                </label>
-            </div>
+            Inverser le sens du flux: &nbsp &nbsp
+            <a href="#" onclick="Dajaxice.webgui.reverse_pump(ajax_callback, {'action': 'off' });" class="btn btn-default btn-raised">Off</a>
+            <a href="#" onclick="Dajaxice.webgui.reverse_pump(ajax_callback, {'action': 'on' });" class="btn btn-info btn-raised">On</a>
 
     </div>
     <div class="jumbotron">
@@ -59,8 +56,8 @@
                     </a>
                 </th>
                 <th>
-                    <a href="#" class="btn btn-default btn-raised">Off</a>
-                    <a onclick="Dajaxice.webgui.start_pump(active_pump_callback, {'id': {{bottle.id}} });" class="btn btn-info btn-raised">On</a>
+                    <a onclick="Dajaxice.webgui.stop_pump(ajax_callback, {'id': {{bottle.slot}} });" class="btn btn-default btn-raised">Off</a>
+                    <a onclick="Dajaxice.webgui.start_pump(ajax_callback, {'id': {{bottle.slot}} });" class="btn btn-info btn-raised">On</a>
                 </th>
             </tr>
             {% endfor %}

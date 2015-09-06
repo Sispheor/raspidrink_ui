@@ -9,8 +9,18 @@ function open_modal_detail(id){
     $('#'+modal_id).modal('show');
 }
 
-function active_pump_callback(data){
-    alert(data.message);
+// callback function for ajax call
+function ajax_callback(data){
+    // Set the message content
+    $('#message_content').text("<b>test</b> " + data.status);
+    // show the box
+    var messages_callback = document.getElementById ( "messages_callback" ) ;
+    messages_callback.style.visibility = "visible" ;
+    jQuery("#messages_callback").fadeIn('fast');
+    // hide after 3 secondes
+    setTimeout(function() {
+        jQuery("#messages_callback").fadeOut('fast');
+    }, 3000);
 }
 
 $(document).ready(function () {
