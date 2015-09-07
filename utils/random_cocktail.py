@@ -77,8 +77,8 @@ def get_random_cocktail(bottles, number_of_bottle):
     i = 0
     for bottle in bottles_selected:
         list_bottle_volume = {'bottle_name': bottle.name,
-                              'volume': random_list[i],
-                              'slot_id': bottle.slot}
+                              'volume': int(random_list[i]),
+                              'slot_id': int(bottle.slot)}
         bottles.append(list_bottle_volume)
         i += 1
 
