@@ -12,36 +12,29 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
-            <div class="well">
-                <h1 class="text-primary text-center">Random</h1>
-
-                <p>Prend au hazard un des cocktails de la liste existante.</p>
-                <a class="btn btn-primary btn-large btn-block" href="{% url 'webgui.views.run_random' %}">Inch Allah</a>
+        <div class="col-md-4">
+            <div class="well well_same_size">
+                <a class="btn btn-primary btn-large btn-block" href="{% url 'webgui.views.run_random' %}">Random</a>
+                <h4>Prend au hazard un des cocktails de la liste existante.</h4>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="well">
-                <h1 class="text-primary text-center">Cerceuille</h1>
+        <div class="col-md-4">
+            <div class="well well_same_size">
+                <a class="btn btn-danger btn-large btn-block" href="{% url 'webgui.views.run_coffin' %}">Cerceuille</a>
+                <h4>Prend au hazard les ingrédients et la quantité de chacuns pour un verre unique.</h4>
+            </div>
+        </div>
 
-                <p>Prend au hazard les ingrédients et la quantité de chacuns pour un verre unique.</p>
-                <a class="btn btn-danger btn-large btn-block" href="{% url 'webgui.views.run_coffin' %}">Adieu</a>
+        <div class="col-md-4">
+            <div class="well well_same_size">
+                <a class="btn btn-info btn-large btn-block" href="{% url 'webgui.views.create_cocktail' %}">Mode création</a>
+                <h4>Créez votre propre cocktail!</h4>
             </div>
         </div>
     </div>
-
+    {% if coktails %}
     <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-8">
-                <h3 class="text-primary">Liste des cocktails</h3>
-            </div>
-            <div class="col-md-4">
-                <!-- create cocktail button -->
-                <a class="btn btn-primary btn-fab btn-raised mdi-content-add right-corner-btn"
-                   href="{% url 'webgui.views.create_cocktail' %}"></a>
-            </div>
-        </div>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -77,6 +70,7 @@
             {% endfor %}
         </table>
     </div>
+    {% endif %}
 </div>
 
 <!-- Modal detail -->

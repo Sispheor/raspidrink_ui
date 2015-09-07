@@ -3,6 +3,14 @@ setTimeout(function() {
     $('#messages').fadeOut('fast');
 }, 3000); // <-- time in milliseconds
 
+// set weel to the same size
+boxes = $('.well_same_size');
+maxHeight = Math.max.apply(
+Math, boxes.map(function() {
+    return $(this).height();
+}).get());
+boxes.height(maxHeight);
+
 //
 function open_modal_detail(id){
     var modal_id = "modal-detail-cocktail-"+id
