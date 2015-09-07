@@ -243,6 +243,12 @@ def run_coffin(request):
                     return render(request, "run_coffin.html", {'max_time': max_time,
                                                                'bottles': bottles})
 
+                elif response["status"] == "error":
+                    messages.add_message(request, messages.ERROR,
+                                         "Erreur de connexion",
+                                         extra_tags='danger')
+                    return redirect('webgui.views.homepage')
+
                 else:
                     messages.add_message(request, messages.ERROR,
                                          "Raspidrink est occupé",

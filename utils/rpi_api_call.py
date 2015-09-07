@@ -1,6 +1,6 @@
 from webgui.models import *
 from django.conf import settings
-from requests import put, get, post
+from requests import put, get, post, RequestException
 import json
 
 
@@ -42,8 +42,10 @@ def get_playload_from_cocktail(cocktail):
 def call_api(url_to_call, payload):
     url = 'http://'+settings.RPI_IP+':5000'
     headers = {'content-type': 'application/json'}
-    r = post(url+url_to_call, data=json.dumps(payload), headers=headers)
-
-    # decode json response. This give a string
-    response = json.loads(r.text)
-    return response
+    try:
+        r = post(url+url_to_call, data=json.dumps(payload), headers=headers)
+        # decode json response. This give a string
+        response = json.loads(r.text)
+        return response
+    except RequestException as e:    # This is the correct syntax
+        return {"status": "error"}
