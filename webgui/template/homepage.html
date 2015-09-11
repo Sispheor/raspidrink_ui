@@ -14,22 +14,19 @@
     <div class="row">
         <div class="col-md-4">
             <div class="well well_same_size">
-                <a class="btn btn-primary btn-large btn-block" href="{% url 'webgui.views.run_random' %}">Random</a>
-                <h4>Prend au hazard un des cocktails de la liste existante.</h4>
+                <a class="btn btn-primary btn-large btn-block" href="{% url 'webgui.views.run_random' %}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Prend au hazard un des cocktails de la liste existante.">Random</a>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="well well_same_size">
-                <a class="btn btn-danger btn-large btn-block" href="{% url 'webgui.views.run_coffin' %}">Cerceuille</a>
-                <h4>Prend au hazard les ingrédients et la quantité de chacuns pour un verre unique.</h4>
+                <a class="btn btn-danger btn-large btn-block" href="{% url 'webgui.views.run_coffin' %}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Prend au hazard les ingrédients et la quantité de chacuns">Cerceuil</a>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="well well_same_size">
-                <a class="btn btn-info btn-large btn-block" href="{% url 'webgui.views.create_cocktail' %}">Mode création</a>
-                <h4>Créez votre propre cocktail!</h4>
+                <a class="btn btn-info btn-large btn-block" href="{% url 'webgui.views.create_cocktail' %}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Créez votre propre cocktail!">Mode création</a>
             </div>
         </div>
     </div>
@@ -51,18 +48,18 @@
                 </th>
                 <th>
                     <a href="{% url 'webgui.views.run_cocktail' cocktail.id %}" type="button"
-                       class="btn btn-primary btn-raised">
+                       class="btn btn-primary btn-raised btn-sm">
                         <span class="mdi-av-play-arrow"></span>
                     </a>
                 </th>
                 <th>
-                    <a onclick="open_modal_detail({{cocktail.id}})" class="btn btn-info btn-raised">
+                    <a onclick="open_modal_detail({{cocktail.id}})" class="btn btn-info btn-raised btn-sm">
                         <span class="mdi-editor-format-list-bulleted"></span>
                     </a>
                 </th>
                 <th>
                     <a href="{% url 'webgui.views.delete_cocktail' cocktail.id %}" type="button"
-                       class="btn btn-default btn-raised">
+                       class="btn btn-default btn-raised btn-sm">
                         <span class="mdi-action-delete"></span>
                     </a>
                 </th>

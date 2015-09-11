@@ -1,3 +1,7 @@
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 // hide messages after a delay
 setTimeout(function() {
     $('#messages').fadeOut('fast');

@@ -238,7 +238,6 @@ def run_coffin(request):
                 response = call_api('/make_cocktail', payload)
 
                 if response["status"] == "ok":
-                    # TODO: get max time from the bigger volume
                     max_time = get_highter_volume(bottles) * 1000
                     return render(request, "run_coffin.html", {'max_time': max_time,
                                                                'bottles': bottles})
