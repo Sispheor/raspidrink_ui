@@ -25,7 +25,7 @@ def get_highter_volume(cocktail):
 
 def get_playload_from_cocktail(cocktail):
     """
-
+    Create a JSON payload from a cocktail model object
     :param cocktail: Cocktail model
     :return: JSON payload
     """
@@ -40,6 +40,12 @@ def get_playload_from_cocktail(cocktail):
 
 
 def call_api(url_to_call, payload):
+    """
+    Call the Rpi Rest API.
+    :param url_to_call: URL to call over the API
+    :param payload: Payload to send to the API
+    :return:
+    """
     url = 'http://'+settings.RPI_IP+':5000'
     headers = {'content-type': 'application/json'}
     try:

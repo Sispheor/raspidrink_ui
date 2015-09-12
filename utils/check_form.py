@@ -16,6 +16,11 @@ def is_total_volume_exceed_20cl(cocktail_item_formset):
 
 
 def is_same_bootle_in_list(cocktail_item_formset):
+    """
+    Check if a bootle not appear more than once in the formset
+    :param cocktail_item_formset: Django formset
+    :return: False is a least one bootle appeared more than once
+    """
     list_id = []
     for form in cocktail_item_formset.forms:
         id = form.cleaned_data['bottle'].id

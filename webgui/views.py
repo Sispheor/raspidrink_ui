@@ -13,7 +13,7 @@ from utils.rpi_api_call import *
 
 def homepage(request):
     """
-    Homepage of the Bar Pi app. Show all availlable coktail
+    Homepage of the RaspiDrink app. Show all availlable coktail
     :param request: metadata about the request
     :return: Homepage
     """
@@ -23,7 +23,6 @@ def homepage(request):
 
 def create_cocktail(request):
     # This class is used to make empty formset forms required
-    # See http://stackoverflow.com/questions/2406537/django-formsets-make-first-required/4951032#4951032
     class RequiredFormSet(BaseFormSet):
         def __init__(self, *args, **kwargs):
             super(RequiredFormSet, self).__init__(*args, **kwargs)
@@ -68,13 +67,18 @@ def create_cocktail(request):
         cocktail_item_formset = BottleItemFormSet()
 
     c = {'bottle_list_form': bottle_list_form,
-         'cocktail_item_formset': cocktail_item_formset,
-        }
+         'cocktail_item_formset': cocktail_item_formset}
     c.update(csrf(request))
     return render(request, 'create_cocktail.html', c)
 
 
 def delete_cocktail(request, id):
+    """
+    Delete a cocktail from the database
+    :param request:
+    :param id: Id of the cocktail to delete
+    :return:
+    """
     cocktail = Cocktail.objects.get(id=id)
     cocktail.delete()
     messages.add_message(request, messages.SUCCESS, "Cocktail supprimé", extra_tags='info')
@@ -106,6 +110,9 @@ def login_page(request):
 
 
 def logout_view(request):
+    """
+    Logout from the admin session
+    """
     logout(request)
     return redirect('webgui.views.homepage')
 
@@ -164,6 +171,9 @@ def update_bottle(request, id):
 
 
 def run_cocktail(request, id):
+    """
+    Make a cocktail. Call the Rpi API
+    """
     # get cocktail by id
     cocktail = Cocktail.objects.get(id=id)
     # create JSON payload from cocktail object
@@ -173,7 +183,8 @@ def run_cocktail(request, id):
     response = call_api('/make_cocktail', payload)
 
     if response["status"] == "ok":
-        # Get the max time from the bigger volume. * 100 to get it in seconde
+        # TODO: change time value switch the pump ratio
+        # Get the max time from the bigger volume. * 1000 to get it in seconde
         max_time = get_highter_volume(cocktail) * 1000
         return render(request, "run_cocktail.html", {'max_time': max_time,
                                                      'cocktail': cocktail})

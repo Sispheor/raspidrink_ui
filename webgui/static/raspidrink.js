@@ -1,3 +1,4 @@
+// Active tooltip
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
@@ -15,7 +16,7 @@ Math, boxes.map(function() {
 }).get());
 boxes.height(maxHeight);
 
-//
+// On click show details
 function open_modal_detail(id){
     var modal_id = "modal-detail-cocktail-"+id
     $('#'+modal_id).modal('show');
@@ -35,6 +36,7 @@ function ajax_callback(data){
     }, 3000);
 }
 
+// Dynamic form used to create a new cocktail
 $(document).ready(function () {
     // Code adapted from http://djangosnippets.org/snippets/1389/
     function updateElementIndex(el, prefix, ndx) {
@@ -70,7 +72,7 @@ $(document).ready(function () {
 
     function addForm(btn, prefix) {
         var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-        // You can only submit a maximum of 16 todo items
+        // You can only submit a maximum of 15 bottle
         if (formCount < 16) {
             // Clone a form (without event handlers) from the first form
             var row = $(".item:first").clone(false).get(0);
