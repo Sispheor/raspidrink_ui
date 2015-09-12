@@ -50,9 +50,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'barpi.urls'
+ROOT_URLCONF = 'RaspiDrink.urls'
 
-WSGI_APPLICATION = 'barpi.wsgi.application'
+WSGI_APPLICATION = 'RaspiDrink.wsgi.application'
 
 
 # Database
