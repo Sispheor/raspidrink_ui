@@ -3,14 +3,14 @@ from django.test import TestCase
 from models import Bottle, Cocktail, Cocktailinfo
 
 # create bottle
-
+"""
 bottle1 = Bottle.objects.create(name="Vodka", slot=1)
 bottle2 = Bottle.objects.create(name="Martini", slot=2)
 bottle3 = Bottle.objects.create(name="Rhum", slot=3)
 bottle4 = Bottle.objects.create(name="Tekila", slot=4)
 bottle5 = Bottle.objects.create(name="Whisky", slot=5)
 bottle6 = Bottle.objects.create(name="Triple sec", slot=6)
-"""
+
 bottle7 = Bottle.objects.create(name="Gin", slot=7)
 bottle8 = Bottle.objects.create(name="Curaçao bleu", slot=8)
 bottle9 = Bottle.objects.create(name="Sucre de canne", slot=9)
@@ -52,13 +52,12 @@ for coktailinfo in coktailinfos:
     print coktailinfo
 
 
-
-all_cocktail = Cocktail.objects.all()
-for cocktail in all_cocktail:
-    cocktail.delete()
-
-
 bottles = Bottle.objects.all()
 for bottle in bottles:
     bottle.delete()
 """
+
+
+all_cocktail = Cocktail.objects.all()
+for cocktail in all_cocktail:
+    cocktail.delete()
