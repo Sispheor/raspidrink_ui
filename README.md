@@ -26,8 +26,25 @@ This command should show you your current Django version.
 python -c "import django; print(django.get_version())"
 ```
 
+### Clone the project
+```
 
-Option 1 : Use Django's server to run Raspidrink
+```
+
+### Create the database
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### Create admin user
+This account will be allowed to access the admin section of RaspiDrink
+```
+python manage.py createsuperuser
+```
+
+
+Use Django's server to run Raspidrink
 ==========
 
 It's not the best practice but it's easy and fast. Recommanded if you are running the code from a Rpi.
@@ -36,7 +53,7 @@ As pi user :
 
 Copy the init script and add it to the startup
 ```
-sudo cp Piclodio2/run_raspidrink/init_script/raspidrink.sh /etc/init.d/raspidrink
+sudo cp RaspiDrink/run_raspidrink/init_script/raspidrink.sh /etc/init.d/raspidrink
 sudo chmod +x /etc/init.d/raspidrink
 sudo update-rc.d raspidrink defaults
 ```
