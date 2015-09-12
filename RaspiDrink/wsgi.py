@@ -1,5 +1,5 @@
 """
-WSGI config for barpi project.
+WSGI config for raspidrink project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
