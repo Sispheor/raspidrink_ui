@@ -4,6 +4,7 @@ from django.forms import ModelForm, HiddenInput, widgets
 from django import forms
 from webgui.models import Cocktail, Bottle, Cocktailinfo
 from django.forms.models import modelformset_factory
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class CoktailForm(forms.Form):
@@ -22,6 +23,7 @@ class BottleItemForm(forms.Form):
                                     widget=forms.Select(attrs={'class': 'form-control'}))
 
     volume = forms.IntegerField(label="Volume en cl",
+                                validators=[MinValueValidator(1), MaxValueValidator(20)],
                                 widget=forms.NumberInput(attrs={'class': 'form-control input-sm'}))
 
 
