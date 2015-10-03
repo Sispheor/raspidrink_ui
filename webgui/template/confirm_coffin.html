@@ -10,7 +10,7 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="well">
                 <fieldset>
-                    <legend>Vous vous engagez à boire la merde qui va sortir?</legend>
+                    <legend class="text-primary">Vous vous engagez à boire la merde qui va sortir?</legend>
                     {% if form.errors %}
                     <div class="alert alert-danger" role="alert">
                         {% for field in form %}
@@ -39,7 +39,7 @@
                            class="btn btn-default btn-raised">
                             Annuler
                         </a>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-primary">
                             <i class="glyphicon glyphicon-ok"></i> Confirmer
                         </button>
                     </form>

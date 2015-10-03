@@ -18,7 +18,7 @@ class CoktailForm(forms.Form):
 
 class BottleItemForm(forms.Form):
     bottle = forms.ModelChoiceField(label="Bouteille",
-                                    queryset=Bottle.objects.all(),
+                                    queryset=Bottle.objects.filter(is_present=True),
                                     required=True,
                                     widget=forms.Select(attrs={'class': 'form-control'}))
 
@@ -57,5 +57,4 @@ class ConfirmCoffin(forms.Form):
                                           required=True,
                                           label="Confirmation",
                                           widget=forms.CheckboxInput(attrs={'class': 'form-control'}))
-
 
