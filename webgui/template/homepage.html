@@ -11,27 +11,31 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="well well_same_size">
-                <a class="btn btn-primary btn-large btn-block" href="{% url 'webgui.views.run_random' %}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Prend au hazard un des cocktails de la liste existante.">Random</a>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="well well_same_size">
-                <a class="btn btn-danger btn-large btn-block" href="{% url 'webgui.views.run_coffin' %}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Prend au hazard les ingrédients et la quantité de chacuns">Cerceuil</a>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="well well_same_size">
-                <a class="btn btn-info btn-large btn-block" href="{% url 'webgui.views.create_cocktail' %}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Créez votre propre cocktail!">Mode création</a>
-            </div>
-        </div>
-    </div>
-    {% if coktails %}
     <div class="jumbotron">
+        <div class="col-md-4">
+            <a class="btn btn-primary btn-large btn-block" href="{% url 'webgui.views.run_random' %}"
+               data-toggle="tooltip" data-placement="bottom" title=""
+               data-original-title="Prend au hazard un des cocktails de la liste existante.">
+                Random
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-danger btn-large btn-block" href="{% url 'webgui.views.run_coffin' %}"
+               data-toggle="tooltip" data-placement="bottom" title=""
+               data-original-title="Prend au hazard les ingrédients et la quantité de chacuns">
+                Cerceuil
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-info btn-large btn-block" href="{% url 'webgui.views.create_cocktail' %}"
+               data-toggle="tooltip" data-placement="bottom" title=""
+               data-original-title="Créez votre propre cocktail!">
+                Mode création
+            </a>
+        </div>
+
+        {% if coktails %}
+
         <table class="table table-striped">
             <thead>
             <tr>
