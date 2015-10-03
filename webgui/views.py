@@ -17,7 +17,8 @@ def homepage(request):
     :param request: metadata about the request
     :return: Homepage
     """
-    cocktails = Cocktail.objects.all()
+    # Get all available cocktails
+    cocktails = _get_availlable_cocktails()
     return render(request, 'homepage.html', {'coktails': cocktails})
 
 
@@ -197,7 +198,7 @@ def run_cocktail(request, id):
 
 def run_random(request):
     # get all cocktail
-    cocktails = Cocktail.objects.all()
+    cocktails = _get_availlable_cocktails()
     if len(cocktails) < 1:
         messages.add_message(request, messages.ERROR,
                              "Aucun cocktail dans le système",
@@ -268,3 +269,30 @@ def run_coffin(request):
     else:
         form = ConfirmCoffin()
     return render(request, 'confirm_coffin.html', {'form': form})
+
+
+@login_required(login_url='/login/')
+def desactivate_bottle(request, id):
+    bottle = get_object_or_404(Bottle, id=id)
+    bottle.is_present = False
+    bottle.save()
+    return redirect('webgui.views.admin_homepage')
+
+
+@login_required(login_url='/login/')
+def activate_bottle(request, id):
+    bottle = get_object_or_404(Bottle, id=id)
+    bottle.is_present = True
+    bottle.save()
+    return redirect('webgui.views.admin_homepage')
+
+
+def _get_availlable_cocktails():
+    # Get all cocktail
+    all_cocktails = Cocktail.objects.all()
+    # get only cocktail that have all bottle present in the system
+    available_cocktail = []
+    for cocktail in all_cocktails:
+        if not cocktail.has_a_bottle_desactivated():
+            available_cocktail.append(cocktail)
+    return available_cocktail

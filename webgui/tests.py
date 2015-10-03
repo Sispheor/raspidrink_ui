@@ -57,7 +57,12 @@ for bottle in bottles:
     bottle.delete()
 """
 
-
+# remove all cocktail
 all_cocktail = Cocktail.objects.all()
 for cocktail in all_cocktail:
     cocktail.delete()
+
+# remove all bottle
+bottles = Bottle.objects.all()
+for bottle in bottles:
+    bottle.delete()

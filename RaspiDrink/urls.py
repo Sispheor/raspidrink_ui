@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     url(r'^run_cocktail/(\d+)/$', 'webgui.views.run_cocktail'),
     url(r'^run_random/$', 'webgui.views.run_random'),
     url(r'^run_coffin/$', 'webgui.views.run_coffin'),
+    url(r'^desactivate_bottle/(\d+)/$', 'webgui.views.desactivate_bottle'),
+    url(r'^activate_bottle/(\d+)/$', 'webgui.views.activate_bottle'),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 
 )
