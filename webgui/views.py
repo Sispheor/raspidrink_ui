@@ -230,7 +230,7 @@ def run_coffin(request):
         form = ConfirmCoffin(request.POST)
         if form.is_valid():
             # get all bottle
-            bottles = Bottle.objects.all()
+            bottles = _get_availlable_cocktails()
 
             # get the number of total bottle to take random
             number_of_bottle = len(bottles)
