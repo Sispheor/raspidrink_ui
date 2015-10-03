@@ -10,13 +10,13 @@
     <div class="col-lg-4 col-lg-offset-4">
         <div class="well">
             <fieldset>
-                <legend>Ajout d'une bouteille</legend>
+                <legend class="text-primary">Ajout d'une bouteille</legend>
                 <form class="form-horizontal login-form" action="{% url 'webgui.views.create_bottle' %}" method="POST">
                     {% csrf_token %}
 
                     {{ form.as_p }}
 
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-primary">
                         <i class="glyphicon glyphicon-ok"></i> Ajouter la bouteille
                     </button>
                 </form>

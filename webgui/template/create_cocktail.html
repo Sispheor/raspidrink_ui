@@ -11,7 +11,7 @@
     <div class="col-lg-4 col-lg-offset-4">
         <div class="well">
             <fieldset>
-                <legend>Création d'un coktail</legend>
+                <legend class="text-primary">Création d'un coktail</legend>
                 <form class="form-group" action="{% url 'webgui.views.create_cocktail' %}" method="POST">{% csrf_token %}
                     <div class="section">
                         {{ bottle_list_form.as_p }}
@@ -21,13 +21,13 @@
                     {% for form in cocktail_item_formset.forms %}
                     <div class="item">
                         {{ form.as_p }}
-                        <p style=""><a class="btn btn-danger delete" href="#"><span class="glyphicon glyphicon-trash"
+                        <p style=""><a class="btn btn-default btn-raised delete" href="#"><span class="glyphicon glyphicon-trash"
                                                                                     aria-hidden="true"></span></a></p>
                     </div>
                     {% endfor %}
                     <p><a id="add" class="btn btn-primary" href="#"><span class="glyphicon glyphicon-plus"
                                                                           aria-hidden="true"></span></a></p>
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-material-pink">
                         <i class="glyphicon glyphicon-ok"></i> Créer le cocktail
                     </button>
                 </form>
