@@ -43,7 +43,7 @@ class BottleForm(ModelForm):
     name = forms.CharField(label="Nom",
                            required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': 'Exemple: Vodka'}))
+                                                         'placeholder': 'Exemple: Vodka'}))
     slot = forms.IntegerField(label="Slot",
                               widget=forms.NumberInput(attrs={'class': 'form-control input-sm'}))
 
@@ -55,6 +55,12 @@ class BottleForm(ModelForm):
 class ConfirmCoffin(forms.Form):
     confirm_checkbox = forms.BooleanField(initial=False,
                                           required=True,
-                                          label="Confirmation",
+                                          label="Je m'engage à boire la merde qui va sortir",
                                           widget=forms.CheckboxInput(attrs={'class': 'form-control'}))
 
+
+class ConfirmCocktail(forms.Form):
+    confirm_checkbox = forms.BooleanField(initial=False,
+                                          required=True,
+                                          label="Mon verre est pret",
+                                          widget=forms.CheckboxInput(attrs={'class': 'form-control'}))

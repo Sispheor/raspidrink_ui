@@ -11,8 +11,7 @@
             <div class="well">
                     <h1 class="text-primary">Placez un verre sous le robinet</h1>
                     {% load staticfiles %}
-                    <img src="{% static 'raspidrink_cup_poison.png' %}" class="img-responsive"/>
-
+                    <img src="{% static 'raspidrink_cup.png' %}" class="img-responsive"/>
                     {% if form.errors %}
                     <div class="alert alert-danger" role="alert">
                         {% for field in form %}
@@ -22,15 +21,16 @@
                         {% endfor %}
                     </div>
                     {% endif %}
-                    <form class="form-horizontal" action="{% url 'webgui.views.run_coffin' %}" method="POST">
+                    <form class="form-horizontal" action="{% url 'webgui.views.run_cocktail' cocktail.id %}" method="POST">
                         {% csrf_token %}
 
                         {% for field in form %}
                         <div class="form-group {% if field.errors %}has-error{% endif %}">
-                            <label for="{{field.name}}" class="col-sm-8 control-label">
+                            <label for="{{field.name}}" class="col-sm-4 control-label">
                                 {{ field.label }}
                             </label>
-                            <div class="col-sm-2">
+
+                            <div class="col-sm-4">
                                 {{ field }}
                             </div>
                         </div>

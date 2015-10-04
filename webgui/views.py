@@ -177,24 +177,28 @@ def run_cocktail(request, id):
     """
     # get cocktail by id
     cocktail = Cocktail.objects.get(id=id)
-    # create JSON payload from cocktail object
-    payload = get_playload_from_cocktail(cocktail)
+    if request.POST:
+        # create JSON payload from cocktail object
+        payload = get_playload_from_cocktail(cocktail)
 
-    # call rasp lib
-    response = call_api('/make_cocktail', payload)
+        # call rasp lib
+        response = call_api('/make_cocktail', payload)
 
-    if response["status"] == "ok":
-        # TODO: change time value switch the pump ratio
-        # Get the max time from the bigger volume. * 1000 to get it in seconde
-        max_time = get_highter_volume(cocktail) * 1000
-        return render(request, "run_cocktail.html", {'max_time': max_time,
-                                                     'cocktail': cocktail})
+        if response["status"] == "ok":
+            # TODO: change time value switch the pump ratio
+            # Get the max time from the bigger volume. * 1000 to get it in seconde
+            max_time = get_highter_volume(cocktail) * 1000
+            return render(request, "run_cocktail.html", {'max_time': max_time,
+                                                         'cocktail': cocktail})
+        else:
+            messages.add_message(request, messages.ERROR,
+                                 "Raspidrink est occupé",
+                                 extra_tags='warning')
+            return redirect('webgui.views.homepage')
     else:
-        messages.add_message(request, messages.ERROR,
-                             "Raspidrink est occupé",
-                             extra_tags='warning')
-        return redirect('webgui.views.homepage')
-
+        form = ConfirmCocktail()
+    return render(request, 'confirm_cocktail.html', {'form': form,
+                                                     'cocktail': cocktail})
 
 def run_random(request):
     # get all cocktail
