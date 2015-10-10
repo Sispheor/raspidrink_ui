@@ -189,7 +189,7 @@ def run_cocktail(request, id):
             if response["status"] == "ok":
                 # TODO: change time value switch the pump ratio
                 # Get the max time from the bigger volume. * 1000 to get it in seconde
-                max_time = get_highter_volume(cocktail) * 1000
+                max_time = response["delay"] * 1000
                 return render(request, "run_cocktail.html", {'max_time': max_time,
                                                              'cocktail': cocktail})
             else:
@@ -221,7 +221,7 @@ def run_random(request):
 
         if response["status"] == "ok":
             # Get the max time from the bigger volume. * 1000 to get it in seconde
-            max_time = get_highter_volume(cocktail) * 1000
+            max_time = response["delay"] * 1000
             return render(request, "run_cocktail.html", {'max_time': max_time,
                                                          'cocktail': cocktail})
         else:
@@ -236,7 +236,7 @@ def run_coffin(request):
         form = ConfirmCoffin(request.POST)
         if form.is_valid():
             # get all bottle
-            bottles = _get_availlable_cocktails()
+            bottles = _get_available_bottle()
 
             # get the number of total bottle to take random
             number_of_bottle = len(bottles)
@@ -256,7 +256,7 @@ def run_coffin(request):
                 response = call_api('/make_cocktail', payload)
 
                 if response["status"] == "ok":
-                    max_time = get_highter_volume(bottles) * 1000
+                    max_time = response["delay"] * 1000
                     return render(request, "run_coffin.html", {'max_time': max_time,
                                                                'bottles': bottles})
 
@@ -302,3 +302,8 @@ def _get_availlable_cocktails():
         if not cocktail.has_a_bottle_desactivated():
             available_cocktail.append(cocktail)
     return available_cocktail
+
+
+def _get_available_bottle():
+    # get all bottle
+    return Bottle.objects.filter(is_present=True)
