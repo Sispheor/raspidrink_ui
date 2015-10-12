@@ -10,7 +10,7 @@ You can either install this part of the project on a Rpi or on another Linux ser
 
 ### Install necesary packages
 ```
-sudo apt-get install python-dev python-pip
+sudo apt-get install python-dev python-pip python-numpy
 ```
 ### Install Django framework and some libs
 ```
