@@ -112,7 +112,7 @@ STATICFILES_FINDERS = (
 )
 
 # RAPI IP
-RPI_IP = '192.168.0.22'
+RPI_IP = '192.168.0.26'
 
 # Max volume in centiliter
 MAX_VOLUME = 20
