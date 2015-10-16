@@ -37,7 +37,7 @@
         </div>
         {% if coktails %}
 
-        <table class="table table-striped">
+        <table class="table table-striped table-hover">
             <thead>
             <tr>
                 <th>Nom</th>
@@ -49,7 +49,7 @@
             {% for cocktail in coktails %}
             <tr>
                 <th>
-                    {{cocktail.name}}
+                    <h2>{{cocktail.name}}</h2>
                 </th>
                 <th>
                     <a href="{% url 'webgui.views.run_cocktail' cocktail.id %}" type="button"
