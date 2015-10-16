@@ -81,8 +81,11 @@ def delete_cocktail(request, id):
     :return:
     """
     cocktail = Cocktail.objects.get(id=id)
-    cocktail.delete()
-    messages.add_message(request, messages.SUCCESS, "Cocktail supprimé", extra_tags='info')
+    if cocktail.lock:
+        messages.add_message(request, messages.ERROR, "Admin only", extra_tags='warning')
+    else:
+        cocktail.delete()
+        messages.add_message(request, messages.SUCCESS, "Cocktail supprimé", extra_tags='info')
     return redirect('webgui.views.homepage')
 
 

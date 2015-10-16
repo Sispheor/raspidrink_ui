@@ -63,10 +63,17 @@
                     </a>
                 </th>
                 <th>
+                    {% if cocktail.lock %}
+                    <a href="#" type="button"
+                       class="btn btn-default btn-raised btn-sm disabled">
+                        <span class="mdi-action-delete"></span>
+                    </a>
+                    {% else %}
                     <a href="{% url 'webgui.views.delete_cocktail' cocktail.id %}" type="button"
                        class="btn btn-default btn-raised btn-sm">
                         <span class="mdi-action-delete"></span>
                     </a>
+                    {% endif %}
                 </th>
             </tr>
             {% endfor %}
